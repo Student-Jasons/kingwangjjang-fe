@@ -22,12 +22,11 @@
       "@/assets/*": ["./public/*"],
       "@/apis/*": ["./app/apis/*"],
       "@/components/*": ["./app/components/*"],
-      "@/constants/*": ["./app/constants/*"],
       "@/hooks/*": ["./app/hooks/*"],
       "@/pages/*": ["./app/pages/*"],
       "@/styles/*": ["./app/styles/*"],
       "@/stores/*": ["./app/stores/*"],
-      "@/types/*": ["./app/constants/types/*"],
+      "@/types/*": ["./app/types/*"],
       "@/utils/*": ["./app/utils/*"]
     }
   },
