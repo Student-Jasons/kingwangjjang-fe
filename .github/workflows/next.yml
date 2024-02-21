@@ -1,8 +1,6 @@
 name: Next.js CI/CD
 
 on:
-  push:
-    branches: [feature/KIN-26-Front-git-action-script]
   pull_request:
     branches: [ main, develop ]
 
