@@ -9,8 +9,8 @@ RUN mkdir /app
 # work dir 고정
 WORKDIR /app
 
-RUN yarn install 
-RUN yarn build
+RUN npm install 
+RUN npm build
 
 # nginx 의 default.conf 를 삭제
 RUN rm /etc/nginx/conf.d/default.conf
