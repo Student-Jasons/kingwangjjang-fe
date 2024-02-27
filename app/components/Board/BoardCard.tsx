@@ -6,11 +6,9 @@ import React, { useState } from 'react'
 
 
 export const BoardCard = ( {title, url, createTime} : BoardCardType) => {
-    const [showMousehover, setShowMousehover] = useState(false);
-    
     return (
         <Card >
-            <CardContent onMouseEnter={() => setShowMousehover(true)} onMouseLeave={() => setShowMousehover(false)}>
+            <CardContent>
                 <Tooltip title={String(createTime)} arrow>
                     <Typography variant="body2">
                         {title}
