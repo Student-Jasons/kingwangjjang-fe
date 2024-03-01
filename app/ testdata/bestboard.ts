@@ -1,7 +1,9 @@
-const boardData: BoardCardType[] = [
+import { BoardCardType } from "@/types/board-type";
+
+export const boardData: BoardCardType[] = [
     {
         site: 'dcinside',
-        title: 'DC 갤러리 게시글 1',
+        title: 'DC 갤러리ㅈㄹㄷㄹㅈㅈㄷㅈㄹㄷㄹㅈㄷ 게시글 1',
         url: 'https://dcinside.com/post1',
         createTime: new Date('2024-03-01T08:00:00Z')
     },
