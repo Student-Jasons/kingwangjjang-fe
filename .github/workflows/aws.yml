@@ -24,7 +24,7 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t kingwangjjang-aws-client:0.0.1 .
-    # docker tag kingwangjjang-client:0.0.1 ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-client:0.0.1
+        docker tag kingwangjjang-aws-client:0.0.1 ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
 
     - name: Push Docker image to Docker Hub
       run: |
