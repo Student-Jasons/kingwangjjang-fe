@@ -31,19 +31,18 @@ jobs:
         docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
 
+
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-        
+    name: deploy
+    runs-on: ubuntu-latest # 실행될 인스턴스 OS와 버전
+
     steps:
-    - name: Connect to WAS & Execute Application
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.AWS_WAS_HOST }}
-        username: ${{ secrets.AWS_WAS_USERNAME }}
-        key: ${{secrets.AWS_SSH_KEY}}
-        port: ${{ secrets.AWS_WAS_SSH_PORT }}
-        script: |
-          docker version
+      - name: Connect to WAS & Execute Application
+        uses: appleboy/ssh-action@v0.1.6 # ssh 접속하는 오픈소스
+        with:
+          host: ${{ secrets.AWS_WAS_HOST }}
+          username: ${{ secrets.AWS_WAS_USERNAME }}
+          key: ${{secrets.AWS_SSH_KEY}}
+          port: ${{ secrets.AWS_WAS_SSH_PORT }}
+          script: | 
+            docker version
