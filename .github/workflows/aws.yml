@@ -30,3 +30,24 @@ jobs:
       run: |
         docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
+
+  run:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+        
+    steps:
+    - name: Connect to WAS & Execute Application
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.AWS_WAS_HOST }}
+        username: ${{ secrets.AWS_WAS_USERNAME }}
+        key: ${{secrets.AWS_SSH_KEY}}
+        port: ${{ secrets.AWS_WAS_SSH_PORT }}
+        script: |
+          docker version
+          docker rm -f kingwangjjang-aws-client || true
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
+          docker run -d --name kingwangjjang-aws-client ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
+        
