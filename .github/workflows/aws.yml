@@ -1,0 +1,34 @@
+name: AWS CI/CD
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Install dependencies and build
+      run: |
+        npm install
+        npm run build
+    - name: Build Docker image
+      run: |
+        docker build -t kingwangjjang-aws-client:0.0.1 .
+    # docker tag kingwangjjang-client:0.0.1 ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-client:0.0.1
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
+
+      
