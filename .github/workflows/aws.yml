@@ -40,9 +40,9 @@ jobs:
       - name: Connect to WAS & Execute Application
         uses: appleboy/ssh-action@v0.1.6 # ssh 접속하는 오픈소스
         with:
-          host: ${{ secrets.AWS_WAS_HOST }}
-          username: ${{ secrets.AWS_WAS_USERNAME }}
-          key: ${{secrets.AWS_SSH_KEY}}
-          port: ${{ secrets.AWS_WAS_SSH_PORT }}
+          host: 13.236.93.129
+          username: ubuntu
+          key: MIIEpAIBAAKCAQEAncRjGZzuCsnkHRzC1n32YTU3aG12Wz5GtEXO4F5TeoB4tP/UYkH4iRosUh46AQFVSpZZCinqjSE2BZSBtkvqolLoBEorcDz7IQ2NqCwIIXAEPOU0PMTEgx3R//8WxAaQ+ghNWVM62KNGvpBmi3STtJ1SbhFNxXyHfAoXzHzmzJnHx0yIJdxtFBFUZo6tPFIpd6gSTw6ZdQAbhtorISl3Bhc0QhLKGHMsfkyNXL58AqybbuyGhwbAj8/HXIhqDbsZTdHUY4B+wPbbJj8FAIq6qqebwl6PfioDtGxziiHLPwNQK8MnPKJNugt6wT06jFz4PfZRY/jPEnnxT/s8pv+IKwIDAQABAoIBAQCVeBwThhQYcJIH6tnE8O3dxtdJvnslkujVnlWTSIp6QwEZKk+DD9FxwzQ+UJjPnv25fpu4/2FSeCaAPuRtW5teUoGynrpsybl65SZSL/U8CK5bKyPEdv9e4X+1s21UJoxv9jGh8TKNUJOTs6cTdE0EDxCrawVtlr+displV+gp6gIN+G6s2W2Z1DceBHtzGWo2b9M3MIWomcyBWIiikslvfPysHOzFacPUk66cJKAKoLk/1uERXwQ1PlWzSah8bgDksxZS5YQthcdtgqEj8KsfSUsoPT12bTyq2TZeQ5M/mqv41TS/bMuEs4bkX82MnO8B9Z8U7ANaVqhoFtjFbfehAoGBANfnzYM5s0UrJks3zNnqMlMTES1stn3tsdyqUyXNfY009xwDNwq+MkJr2W93IhNMWTEdL3P71iR6WhuM8ITa8H/enkvRvtplyzuyY9I2GIsWyYqVwLbHO/P5PG7AALksvMaMqbbkFMTNHCzrZQTg8KMJf/TZB7d7GARBRpmEkhSJAoGBALsQrIKhAWQxHQlJ9FOl81pF+LXvWW6BHXUEXkblLR8RrI7aUtvREb/zGZvZNkWrXRam78pZHocazQbAGgDMN1oE3jT4dDTuPVs1+BTwBjchl2NS5LChtbg5KeUkqc0UZ0KEd8ahZHte+3GoIjPBO2snAIuVn8rzYDuEFWbQK3ITAoGBAJ4xrwgud+b/VcCZMxScH6F1AAoLdK9SQRcRCXlSVmLnYwP4axUJBORcB2Y/oQ0IzPVKkCFobaAuseUr4HNHxB287LlbBn8ZRM8Jx1AX6OXInYVYcmq6EniRrrDrJ9yGJg9Is3VZKsqECtfy5gKsGkUrScEKYDgVDiTX+zWyyCIZAoGAb/EQarNSk9RYHeDlltDuCY1pweXTTK9zIz1T9XTbRYZcDrhTcTtxNb6SCpM3SQW9FPsc76fY/txo6Ks4ZFXQocvb9TLgx3Pxv41SQaVI8uDlKQjH1XNPvUhn67m+6vxUtpdy3ahi6vjx2xfUL8hoeDzEtML69oYhhjwKWpYkCYUCgYBaYj65awJo+W5xyCjTNe1gehWyuj98ZKE+uVEbs+pM8WhAMwBiakUCAw/xNnYGAKgwruPmRHdXF3lk+cm76vrAQcqOFgw5ELztQzTXwGfiwEoDGEemAgAJ1eZK8eW9z6U2uNDz3v7gTKOUI7l5/Yxlv5aU1VWB1bmkI3i/UzNYnQ==
+          port: 22
           script: | 
             docker version
