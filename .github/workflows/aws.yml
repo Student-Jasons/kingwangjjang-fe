@@ -31,7 +31,7 @@ jobs:
         docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
 
-  run:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     strategy:
@@ -47,7 +47,3 @@ jobs:
         port: ${{ secrets.AWS_WAS_SSH_PORT }}
         script: |
           docker version
-          docker rm -f kingwangjjang-aws-client || true
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
-          docker run -d --name kingwangjjang-aws-client ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
-        
