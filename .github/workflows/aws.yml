@@ -38,11 +38,11 @@ jobs:
 
     steps:
       - name: Connect to WAS & Execute Application
-        uses: appleboy/ssh-action@v0.1.6 # ssh 접속하는 오픈소스
+        uses: appleboy/ssh-action@master # GitHub제공 액션 사용, ssh로 인스턴스 접속
         with:
-          host: ${{secrets.AWS_HOST}}
-          username: ${{secrets.AWS_USERNAME}}
-          key: ${{secrets.AWS_SSH_KEY}}
-          port: ${{secrets.AWS_SSH_PORT}}
-          script: | 
+          host: ${{ secrets.WAS_HOST }}
+          username: ${{ secrets.WAS_USERNAME }}
+          key: ${{secrets.SSH_KEY}}
+          port: ${{ secrets.WAS_SSH_PORT }}
+          script: | # 인스턴스 접속후 실행할 스크립트
             sudo docker version
