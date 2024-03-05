@@ -43,10 +43,10 @@ jobs:
         with:
           host: ${{ secrets.WAS_HOST }}
           username: ${{ secrets.WAS_USERNAME }}
-          key: ${{secrets.SSH_KEY}}
+          key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.WAS_SSH_PORT }}
           script: | # 인스턴스 접속후 실행할 스크립트
-            docker version
-            docker rm -f kingwangjjang-aws-client || true
-            docker pull hwanju1596/kingwangjjang-aws-client:0.0.1
-            docker run -d --name kingwangjjang-aws-client hwanju1596/kingwangjjang-aws-client:0.0.1
+            sudo docker version
+            sudo docker rm -f kingwangjjang-aws-client || true
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
+            sudo docker run -d --name kingwangjjang-aws-client ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
