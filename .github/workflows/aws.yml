@@ -33,6 +33,7 @@ jobs:
 
 
   deploy:
+    needs: build
     name: deploy
     runs-on: ubuntu-latest # 실행될 인스턴스 OS와 버전
 
