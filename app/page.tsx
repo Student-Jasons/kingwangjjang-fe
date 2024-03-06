@@ -1,13 +1,20 @@
-import { BestBoard } from "./apollo/board";
-import { BoardCard } from "./components/Board/BoardCard";
 import { BoardList } from "./components/Board/BoardList";
 import { boardData } from "./ testdata/bestboard";
+import Grid from '@mui/material/Unstable_Grid2/Grid2';
+import { PostSummarizer } from "./components";
 
 export default function Home() {
   
   return (
     <div className="flex justify-center items-center h-screen">
-    <BoardList boardList={boardData} />
-  </div>
+      <Grid container spacing={2} >
+        <Grid xs={12}>
+            <BoardList boardList={boardData} />
+        </Grid>
+        <Grid xs={12}>
+          <PostSummarizer boardUrl="https://m.dcinside.com/board/dcbest/213003"/>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
