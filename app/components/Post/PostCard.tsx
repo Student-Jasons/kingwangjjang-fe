@@ -1,11 +1,11 @@
 "use client";
 
-import { BoardCardType } from '@/types/board-type';
+import { PostCardType } from '@/types/board-type';
 import { Card, CardContent, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react'
 
 
-export const BoardCard = ( {title, url, createTime} : BoardCardType) => {
+export const PostCard = ( {title, url, createTime} : PostCardType) => {
     return (
         <Card >
             <CardContent>

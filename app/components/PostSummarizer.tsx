@@ -18,9 +18,9 @@ export const PostSummarizer = ({boardUrl}: props) => {
           <GPT text={'test'}/>
         </Grid>
         <Grid xs={12}>
-        <div className="relative" style={{ paddingTop: "56.25%"}}>
-          <a href={boardUrl} />
-        </div>
+          <div className="relative" style={{ paddingTop: "56.25%"}}>
+            <a href={boardUrl} />
+          </div>
         </Grid>
       </Grid>
   );

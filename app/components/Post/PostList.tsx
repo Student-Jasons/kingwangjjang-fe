@@ -1,13 +1,13 @@
     import React from 'react'
-    import { BoardCardType } from '@/types/board-type';
-    import { BoardCard } from './BoardCard';
+    import { PostCardType } from '@/types/board-type';
+    import { PostCard } from './PostCard';
     import { List, ListItem } from '@mui/material';
 
     interface Props {
-        boardList: BoardCardType[];
+        PostList: PostCardType[];
     }
     
-    export const BoardList = ({ boardList }: Props) => {
+    export const PostList = ({ PostList }: Props) => {
         return (
             <List sx={{
                 maxHeight: 300,
@@ -15,12 +15,12 @@
                 width: "100%",
                 position: "relative",
                 }} >
-                {boardList.map((board, index) => (
+                {PostList.map((board, index) => (
                     <ListItem 
                     key={index} 
                     sx={{
                     }}>
-                        <BoardCard 
+                        <PostCard 
                             site={board.site} 
                             title={board.title} 
                             url={board.url} 

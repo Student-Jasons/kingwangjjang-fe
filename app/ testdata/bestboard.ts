@@ -1,6 +1,6 @@
-import { BoardCardType } from "@/types/board-type";
+import { PostCardType } from "@/types/board-type";
 
-export const boardData: BoardCardType[] = [
+export const boardData: PostCardType[] = [
     {
         site: 'dcinside',
         title: 'DC 갤러리ㅈㄹㄷㄹㅈㅈㄷㅈㄹㄷㄹㅈㄷ 게시글 1',
