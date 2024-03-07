@@ -48,3 +48,5 @@ jobs:
           script: | # 인스턴스 접속후 실행할 스크립트
             sudo docker version
             sudo docker search kingwangjjang-aws-client
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
+            sudo docker run -d --name kingwangjjang-aws-client ${{ secrets.DOCKERHUB_USERNAME }}/kingwangjjang-aws-client:0.0.1
