@@ -1,4 +1,4 @@
-name: Next.js CI/CD
+name: next_synology ci-cd 
 
 on:
   pull_request:
