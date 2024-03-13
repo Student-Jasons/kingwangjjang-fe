@@ -7,17 +7,15 @@ import { Container } from "@mui/material";
 export default function Home() {
   
   return (
-    <Container maxWidth="lg">
-      <div className="flex max-w-lg items-center h-screen">
+    <Container className="flex max-w-lg items-center h-screen" maxWidth="lg">
         <Grid container className='flex items-center' spacing={2} >
           <Grid xs={12}>
               <PostList PostList={boardData} />
           </Grid>
           <Grid xs={12}>
-            <PostSummarizer boardUrl="https://m.dcinside.com/board/dcbest/213003"/>
+            <PostSummarizer GPTAnswer="test"/>
           </Grid>
         </Grid>
-      </div>
     </Container>
   );
 }
