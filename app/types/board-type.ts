@@ -1,6 +1,6 @@
-export interface BoardCardType {
+export interface PostCardType {
     site: 'dcinside' | 'ygosu' | 'ppomppu'
     title: String
-    url: String
+    url: string
     createTime: Date
 }
