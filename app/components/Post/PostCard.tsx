@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 
 export const PostCard = ( {title, url, createTime} : PostCardType) => {
     return (
-        <Card >
+        <Card className='w-screen'>
             <CardContent>
                 <Tooltip title={String(createTime)} arrow>
                     <Typography variant="body2">

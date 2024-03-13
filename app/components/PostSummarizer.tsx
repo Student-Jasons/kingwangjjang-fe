@@ -6,6 +6,7 @@ import 'swiper/css/pagination';
 
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import { GPT } from './GPT';
+import { Divider } from '@mui/material';
 interface props {
     boardUrl: string
 }
@@ -13,14 +14,15 @@ interface props {
 export const PostSummarizer = ({boardUrl}: props) => {
   
   return (
-      <Grid container spacing={2}>
+      <Grid container >
         <Grid xs={12}>
           <GPT text={'test'}/>
         </Grid>
         <Grid xs={12}>
-          <div className="relative" style={{ paddingTop: "56.25%"}}>
-            <a href={boardUrl} />
-          </div>
+          <Divider />
+        </Grid>
+        <Grid xs={12}>
+            <a href={boardUrl}> {'Link ->'} </a>
         </Grid>
       </Grid>
   );

@@ -10,16 +10,12 @@
     export const PostList = ({ PostList }: Props) => {
         return (
             <List sx={{
-                maxHeight: 300,
+                maxHeight: 500,
                 overflow: "auto",
                 width: "100%",
-                position: "relative",
                 }} >
                 {PostList.map((board, index) => (
-                    <ListItem 
-                    key={index} 
-                    sx={{
-                    }}>
+                    <ListItem key={index}>
                         <PostCard 
                             site={board.site} 
                             title={board.title} 

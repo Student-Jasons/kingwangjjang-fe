@@ -54,5 +54,29 @@ export const boardData: PostCardType[] = [
         title: '뽐뿌 게시물 3',
         url: 'https://ppomppu.co.kr/post3',
         createTime: new Date('2024-02-28T14:45:00Z')
-    }
+    },
+    {
+        site: 'dcinside',
+        title: 'DC 갤러리 게시글 2',
+        url: 'https://dcinside.com/post2',
+        createTime: new Date('2024-02-29T15:30:00Z')
+    },
+    {
+        site: 'dcinside',
+        title: 'DC 갤러리 게시글 2',
+        url: 'https://dcinside.com/post2',
+        createTime: new Date('2024-02-29T15:30:00Z')
+    },
+    {
+        site: 'dcinside',
+        title: 'DC 갤러리 게시글 2',
+        url: 'https://dcinside.com/post2',
+        createTime: new Date('2024-02-29T15:30:00Z')
+    },
+    {
+        site: 'dcinside',
+        title: 'DC 갤러리 게시글 2',
+        url: 'https://dcinside.com/post2',
+        createTime: new Date('2024-02-29T15:30:00Z')
+    },
 ];

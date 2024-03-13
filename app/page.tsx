@@ -6,15 +6,16 @@ import { PostSummarizer } from "./components";
 export default function Home() {
   
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Grid container spacing={2} >
-        <Grid xs={12}>
-            <PostList PostList={boardData} />
+      <div className="flex max-w-lg items-center h-screen">
+        <Grid container spacing={2} >
+          <Grid xs={12} className=''>
+              <PostList PostList={boardData} />
+          </Grid>
+          <Grid xs={12}>
+            <PostSummarizer boardUrl="https://m.dcinside.com/board/dcbest/213003"/>
+          </Grid>
         </Grid>
-        <Grid xs={12}>
-          <PostSummarizer boardUrl="https://m.dcinside.com/board/dcbest/213003"/>
-        </Grid>
-      </Grid>
-    </div>
+      </div>
+
   );
 }
