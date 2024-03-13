@@ -12,7 +12,6 @@
             <List sx={{
                 maxHeight: 500,
                 overflow: "auto",
-                width: "100%",
                 }} >
                 {PostList.map((board, index) => (
                     <ListItem key={index}>
