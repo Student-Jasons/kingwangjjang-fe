@@ -1,23 +1,22 @@
-'use client'
-import React from 'react'
+"use client";
+import React from "react";
 
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
 
-import Grid from '@mui/material/Unstable_Grid2/Grid2';
-import { GPT } from './GPT';
-import { Divider } from '@mui/material';
+import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import { GPT } from "./GPT";
+
 interface props {
-    GPTAnswer: string
+  GPTAnswer: string;
 }
 
-export const PostSummarizer = ({GPTAnswer}: props) => {
-  
+export const PostSummarizer = ({ GPTAnswer }: props) => {
   return (
-      <Grid container >
-        <Grid xs={12}>
-          <GPT text={GPTAnswer}/>
-        </Grid>
+    <Grid container>
+      <Grid xs={12}>
+        <GPT text={GPTAnswer} />
       </Grid>
+    </Grid>
   );
-}
+};
