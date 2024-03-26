@@ -5,9 +5,10 @@
 
     interface Props {
         PostList: PostCardType[];
+        handlePostCardClick: (id: String) => void;
     }
     
-    export const PostList = ({ PostList }: Props) => {
+    export const PostList = ({ PostList, handlePostCardClick }: Props) => {
         return (
             <List sx={{
                 maxHeight: 500,
@@ -15,11 +16,15 @@
                 }} >
                 {PostList.map((board, index) => (
                     <ListItem key={index}>
-                        <PostCard 
+                        <PostCard
+                            onClick={()=>handlePostCardClick(board.id)}
+                            id={board.id}
                             site={board.site} 
                             title={board.title} 
                             url={board.url} 
-                            createTime={board.createTime}/>
+                            createTime={board.createTime}
+                            GPTAnswer={board.GPTAnswer}
+                            />
                     </ListItem>
                 ))}
             </List>

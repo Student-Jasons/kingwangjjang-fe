@@ -8,7 +8,7 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import { GPT } from './GPT';
 import { Divider } from '@mui/material';
 interface props {
-    GPTAnswer: string
+    GPTAnswer: String;
 }
 
 export const PostSummarizer = ({GPTAnswer}: props) => {

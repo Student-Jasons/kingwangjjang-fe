@@ -4,9 +4,13 @@ import React, { useState } from 'react'
 import LaunchIcon from '@mui/icons-material/Launch';
 import Link from 'next/link';
 
-export const PostCard = ({ title, url, createTime }: PostCardType) => {
+interface props extends PostCardType {
+    onClick: (id : String) => void;
+}
+
+export const PostCard = ({id, title, url, createTime, GPTAnswer, onClick }: props) => {
     return (
-        <Card className='w-screen'>
+        <Card className='w-screen' onClick={()=>{onClick(id)}}>
             <CardContent className="flex justify-between">
                 <Tooltip title={String(createTime)} arrow>
                     <Typography variant="body2">
