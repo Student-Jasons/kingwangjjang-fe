@@ -6,7 +6,6 @@ import { Container } from "@mui/material";
 import { useGPTStore } from "@/stores/board";
 import { gql, useQuery } from '@apollo/client';
 import { boardData } from "../ testdata/bestboard";
-import {InputNameType} from "@/types/board-type"
 const BEST_BOARD = gql`
   query MyQuery {
     allRealtime {

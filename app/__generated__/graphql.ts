@@ -38,6 +38,7 @@ export type Query = {
 
 export type RealTimeType = {
   __typename?: 'RealTimeType';
+  GPTAnswer: Scalars['String']['output'];
   Id: Scalars['String']['output'];
   createTime: Scalars['DateTime']['output'];
   site: Scalars['String']['output'];
