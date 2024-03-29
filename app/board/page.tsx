@@ -4,21 +4,21 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import { PostSummarizer } from "@/components/PostSummarizer";
 import { Container } from "@mui/material";
 import { useGPTStore } from "@/stores/board";
-import { gql, useQuery } from '@apollo/client';
+import { DocumentNode, useQuery } from '@apollo/client';
 import { boardData } from "../ testdata/bestboard";
-const BEST_BOARD = gql`
+import { gql } from '@/gql/gql';
+
+const findUserQuery = gql(`
   query MyQuery {
     allRealtime {
       Id
       GPTAnswer
     }
-  }
-`;
+  }`);
 
 export default function Home() {
   const { answer, setAnswerById } = useGPTStore();
-  const { loading, error, data } = useQuery(BEST_BOARD);
-
+  const { loading, error, data } = useQuery(findUserQuery);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
   console.log(data);

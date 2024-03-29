@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -45,3 +46,11 @@ export type RealTimeType = {
   title: Scalars['String']['output'];
   url: Scalars['String']['output'];
 };
+
+export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyQueryQuery = { __typename?: 'Query', allRealtime?: Array<{ __typename?: 'RealTimeType', Id: string, GPTAnswer: string } | null> | null };
+
+
+export const MyQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MyQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allRealtime"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Id"}},{"kind":"Field","name":{"kind":"Name","value":"GPTAnswer"}}]}}]}}]} as unknown as DocumentNode<MyQueryQuery, MyQueryQueryVariables>;
