@@ -10,6 +10,7 @@ interface GPTStore {
 export const useGPTStore = create<GPTStore>((set) => ({
   id: 0,
   answer: 'GPT 요약 중...',
+  setAnswer: (value: string) => set(() => ({ answer: value })),
   setAnswerById: (id: String, data: PostCardType[]) => {
     console.log(data)
     const post = data.find((item) => item.id === id);

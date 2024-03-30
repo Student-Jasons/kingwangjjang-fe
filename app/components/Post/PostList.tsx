@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { PostCard } from './PostCard';
 import { List, ListItem } from '@mui/material';
 import { AllRealtimeQuery } from '@/gql/graphql';
@@ -19,13 +19,18 @@ query AllRealtime {
 }`);
 
 export const PostList = () => {
-    const { answer, setAnswerById } = useGPTStore();
+    const { setAnswer } = useGPTStore();
     const { loading, error, data } = useQuery<AllRealtimeQuery>(realtimqQuery);
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
-    const handlePostCardClick = (id: string) => {
-      // setAnswerById(id, boardData);
-    };
+    const handlePostCardClick = useCallback((id: string) => {
+        if (data?.allRealtime) {
+            const clickedItem = data.allRealtime.find(item => item?.Id === id);
+            if (clickedItem) {
+                setAnswer(clickedItem.GPTAnswer);
+            }
+        }
+    }, [data, setAnswer]);
 
     return (
         <List sx={{

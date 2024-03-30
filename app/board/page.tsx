@@ -13,7 +13,7 @@ export default function Home() {
               <PostList/> 
           </Grid>
           <Grid xs={12}>
-            <PostSummarizer GPTAnswer={"answer"}/>
+            <PostSummarizer/>
           </Grid>
         </Grid>
       </Container>
