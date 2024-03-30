@@ -1,32 +1,52 @@
-    import React from 'react'
-    import { PostCardType } from '@/types/board-type';
-    import { PostCard } from './PostCard';
-    import { List, ListItem } from '@mui/material';
+import React from 'react'
+import { PostCard } from './PostCard';
+import { List, ListItem } from '@mui/material';
+import { AllRealtimeQuery } from '@/gql/graphql';
+import { useQuery } from '@apollo/client';
+import { gql } from '@/gql/gql';
+import { useGPTStore } from "@/stores/board";
 
-    interface Props {
-        PostList: PostCardType[];
-        handlePostCardClick: (id: String) => void;
-    }
-    
-    export const PostList = ({ PostList, handlePostCardClick }: Props) => {
-        return (
-            <List sx={{
-                maxHeight: 500,
-                overflow: "auto",
-                }} >
-                {PostList.map((board, index) => (
+const realtimqQuery = gql(`
+query AllRealtime {
+  allRealtime {
+      Id
+      site
+      title
+      url
+      createTime
+      GPTAnswer
+  }
+}`);
+
+export const PostList = () => {
+    const { answer, setAnswerById } = useGPTStore();
+    const { loading, error, data } = useQuery<AllRealtimeQuery>(realtimqQuery);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error : {error.message}</p>;
+    const handlePostCardClick = (id: string) => {
+      // setAnswerById(id, boardData);
+    };
+
+    return (
+        <List sx={{
+            maxHeight: 500,
+            overflow: "auto",
+            }} >
+            {data?.allRealtime && data?.allRealtime.map((board, index) => (
+                board && (
                     <ListItem key={index}>
                         <PostCard
-                            onClick={()=>handlePostCardClick(board.id)}
-                            id={board.id}
+                            onClick={() => handlePostCardClick(board.Id)} 
+                            id={board.Id}
                             site={board.site} 
                             title={board.title} 
                             url={board.url} 
-                            createTime={board.createTime}
+                            createTime={new Date(board.createTime)} 
                             GPTAnswer={board.GPTAnswer}
                             />
                     </ListItem>
-                ))}
-            </List>
-        );
-    };
+                )
+            ))}
+        </List>
+    );
+};
