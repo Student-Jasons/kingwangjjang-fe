@@ -23,14 +23,14 @@ export const PostList = () => {
     const { loading, error, data } = useQuery<AllRealtimeQuery>(realtimqQuery);
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
-    const handlePostCardClick = useCallback((id: string) => {
+    const handlePostCardClick = (id: string) => {
         if (data?.allRealtime) {
             const clickedItem = data.allRealtime.find(item => item?.Id === id);
             if (clickedItem) {
                 setAnswer(clickedItem.GPTAnswer);
             }
         }
-    }, [data, setAnswer]);
+    };
 
     return (
         <List sx={{
