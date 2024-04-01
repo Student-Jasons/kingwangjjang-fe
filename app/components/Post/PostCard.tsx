@@ -7,15 +7,19 @@ import {
   Card,
   CardContent,
   Collapse,
+  Icon,
+  IconButton,
   Tooltip,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import LaunchIcon from "@mui/icons-material/Launch";
 
 export const PostCard = ({
+  id,
   title,
   url,
   createTime,
@@ -47,12 +51,13 @@ export const PostCard = ({
           </Link>
         </Box>
         <Box>
-          <Button onClick={handleToggle}>
-            {expanded ? "GPT요약 접기" : "GPT요약 펼치기"}
-          </Button>
+          <IconButton onClick={handleToggle}>
+            <ArrowForwardIosIcon
+              sx={{ transform: expanded ? "routed(90deg)" : "routed(0deg)" }}
+            />
+          </IconButton>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <div>
-              {/* 펼쳐질 내용 */}
               <Typography
                 variant="body1"
                 sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}
