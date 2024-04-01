@@ -1,8 +1,8 @@
 export interface PostCardType {
-    id: String;
-    site: 'dcinside' | 'ygosu' | 'ppomppu';
-    title: String;
+    id: string;
+    site: string;
+    title: string;
     url: string;
     createTime: Date;
-    GPTAnswer: String;
+    GPTAnswer: string;
 }

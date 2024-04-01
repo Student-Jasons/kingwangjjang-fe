@@ -27,7 +27,8 @@
       "@/styles/*": ["./app/styles/*"],
       "@/stores/*": ["./app/stores/*"],
       "@/types/*": ["./app/types/*"],
-      "@/utils/*": ["./app/utils/*"]
+      "@/utils/*": ["./app/utils/*"],
+      "@/gql/*": ["./app/__generated__/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

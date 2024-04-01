@@ -3,14 +3,16 @@ import { PostCardType } from '@/types/board-type';
 
 interface GPTStore {
   id: number;
-  answer: String;
-  setAnswerById: (id: String, data: PostCardType[]) => void;
+  answer: string;
+  setAnswer: (answer: string) => void;
+  setAnswerById: (id: string, data: PostCardType[]) => void;
 }
 
 export const useGPTStore = create<GPTStore>((set) => ({
   id: 0,
   answer: 'GPT 요약 중...',
-  setAnswerById: (id: String, data: PostCardType[]) => {
+  setAnswer: (value: string) => set(() => ({ answer: value })),
+  setAnswerById: (id: string, data: PostCardType[]) => {
     console.log(data)
     const post = data.find((item) => item.id === id);
     if (post) {
