@@ -51,10 +51,14 @@ export const PostCard = ({
           </Link>
         </Box>
         <Box>
-          <IconButton onClick={handleToggle}>
-            <ArrowForwardIosIcon
-              sx={{ transform: expanded ? "routed(90deg)" : "routed(0deg)" }}
-            />
+          <IconButton
+            onClick={handleToggle}
+            sx={{
+              transform: expanded ? "rotate(90deg)" : "rotate(0deg)",
+              transition: "transform 0.2s ease",
+            }}
+          >
+            <ArrowForwardIosIcon />
           </IconButton>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <div>
