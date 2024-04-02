@@ -13,15 +13,9 @@ import Link from "next/link";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 
-interface props {
-  isMobile: boolean;
-}
-
 export const TemporaryDrawer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const drawerDirection = isMobile ? "top" : "left";
 
   return (
     <>
