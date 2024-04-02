@@ -12,7 +12,6 @@ import {
 import { TemporaryDrawer } from "../Drawer/TemporaryDrawer";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-// import { useIsMobile } from "@/app/hooks/useIsMobile";
 
 export const Header = () => {
   const [open, setOpen] = useState(false);

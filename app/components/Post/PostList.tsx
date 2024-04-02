@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import { PostCardType } from "@/types/board-type";
 import { List, ListItem, useMediaQuery, useTheme } from "@mui/material";
 import { PostCard } from "./PostCard";

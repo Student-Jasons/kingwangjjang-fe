@@ -1,4 +1,4 @@
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Grid } from "@mui/material";
 import { SideBar } from "./Side/SideBar";
 import { PostList } from "./Post/PostList";
 import { boardData } from "../ testdata/bestboard";

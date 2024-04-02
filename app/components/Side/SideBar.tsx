@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-// import { useIsMobile } from "@/app/hooks/useIsMobile";
 import { TemporaryDrawer } from "../Drawer/TemporaryDrawer";
 import { Drawer, useMediaQuery, useTheme } from "@mui/material";
 
