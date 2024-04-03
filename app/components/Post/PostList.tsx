@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { PostCard } from './PostCard';
 import { List, ListItem } from '@mui/material';
 import { AllRealtimeQuery } from '@/gql/graphql';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { gql } from '@/gql/gql';
 import { useGPTStore } from "@/stores/board";
 
@@ -18,19 +18,36 @@ query AllRealtime {
   }
 }`);
 
+const SUMMARY_BOARD = gql(`
+  mutation SummaryBoard($boardId: String!) {
+    summaryBoard(boardId: $boardId) {
+      response
+    }
+  }
+`);
+
 export const PostList = () => {
     const { setAnswer } = useGPTStore();
     const { loading, error, data } = useQuery<AllRealtimeQuery>(realtimqQuery);
+    const [summaryBoardMutation] = useMutation(SUMMARY_BOARD);
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
-    const handlePostCardClick = (id: string) => {
-        if (data?.allRealtime) {
-            const clickedItem = data.allRealtime.find(item => item?.Id === id);
-            if (clickedItem) {
-                setAnswer(clickedItem.GPTAnswer);
+    const handleSummaryBoard = async (boardId: string) => {
+        try {
+          const response = await summaryBoardMutation({
+            variables: {
+              boardId: boardId
             }
+          });
+          const responseData = response.data?.summaryBoard?.response;
+    
+          if (responseData) {
+            setAnswer(responseData);
+          }
+        } catch (error) {
         }
-    };
+      };
 
     return (
         <List sx={{
@@ -41,7 +58,7 @@ export const PostList = () => {
                 board && (
                     <ListItem key={index}>
                         <PostCard
-                            onClick={() => handlePostCardClick(board.Id)} 
+                            onClick={() => handleSummaryBoard(board.Id)} 
                             id={board.Id}
                             site={board.site} 
                             title={board.title} 
