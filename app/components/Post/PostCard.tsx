@@ -32,7 +32,7 @@ export const PostCard = ({
   };
 
   return (
-    <Card sx={{ width: "100%" }}>
+    <Card sx={{ width: "100%" }} onClick={handleToggle}>
       <CardContent sx={{ display: "flex", flexDirection: "column" }}>
         <Box
           sx={{
@@ -46,20 +46,11 @@ export const PostCard = ({
               {title}
             </Typography>
           </Tooltip>
-          <Link href={url} target="_blank">
+          <Link href={url} target="_blank" onClick={(e) => e.stopPropagation()}>
             <LaunchIcon />
           </Link>
         </Box>
         <Box>
-          <IconButton
-            onClick={handleToggle}
-            sx={{
-              transform: expanded ? "rotate(90deg)" : "rotate(0deg)",
-              transition: "transform 0.2s ease",
-            }}
-          >
-            <ArrowForwardIosIcon />
-          </IconButton>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <div>
               <Typography
