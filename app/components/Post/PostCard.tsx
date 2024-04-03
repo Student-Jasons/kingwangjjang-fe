@@ -46,21 +46,22 @@ export const PostCard = ({
               {title}
             </Typography>
           </Tooltip>
-          <Link href={url} target="_blank" onClick={(e) => e.stopPropagation()}>
-            <LaunchIcon />
-          </Link>
+          
         </Box>
         <Box>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <div>
-              <Typography
-                variant="body1"
-                sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}
-              >
-                {GPTAnswer}
-              </Typography>
-            </div>
-          </Collapse>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <div className="flex justify-between items-center">
+            <Typography
+              variant="body1"
+              className="whitespace-pre-wrap break-word"
+            >
+              {GPTAnswer}
+            </Typography>
+            <Link href={url} target="_blank" onClick={(e) => e.stopPropagation()}>
+              <LaunchIcon />
+            </Link>
+          </div>
+        </Collapse>
         </Box>
       </CardContent>
     </Card>
