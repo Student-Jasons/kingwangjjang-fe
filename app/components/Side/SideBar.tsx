@@ -1,6 +1,6 @@
 "use client";
 
-import { TemporaryDrawer } from "../Drawer/TemporaryDrawer";
+import { TemporaryDrawer } from "@/components/Drawer/TemporaryDrawer";
 import { Drawer, useMediaQuery, useTheme } from "@mui/material";
 
 export const SideBar = () => {
