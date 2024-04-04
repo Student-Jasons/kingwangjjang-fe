@@ -5,12 +5,16 @@ interface GPTStore {
   id: number;
   answer: string;
   setAnswer: (answer: string) => void;
-  setAnswerById: (id: string, data: PostCardType[]) => void;
+  reset: () => void;
+}
+
+const initialState: {id: number; answer: string} = {
+  id: 0,
+  answer: 'GPT 생성 중입니다. 이미지가 많은 경우 오래 걸립니다.',
 }
 
 export const useGPTStore = create<GPTStore>((set) => ({
-  id: 0,
-  answer: 'GPT 생성 중입니다. 이미지가 많은 경우 오래 걸립니다.',
+  ...initialState,
   setAnswer: (value: string) => set(() => ({ answer: value })),
   setAnswerById: (id: string, data: PostCardType[]) => {
     console.log(data)
@@ -21,4 +25,5 @@ export const useGPTStore = create<GPTStore>((set) => ({
       set({ answer: '해당 ID에 대한 데이터를 찾을 수 없습니다.' });
     }
   },
+  reset: () => {set(initialState)}
 }));

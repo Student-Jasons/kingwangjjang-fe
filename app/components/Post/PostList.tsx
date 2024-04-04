@@ -27,7 +27,7 @@ const SUMMARY_BOARD = gql(`
 `);
 
 export const PostList = () => {
-    const { setAnswer } = useGPTStore();
+    const { setAnswer, reset } = useGPTStore();
     const { loading: realtimeQueryLoading, error: realtimeQueryError, data: realtimeQueryData } = useQuery<AllRealtimeQuery>(realtimqQuery);
     const [summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError }] = useMutation<SummaryBoardMutation>(SUMMARY_BOARD, {
       refetchQueries: [
@@ -39,7 +39,7 @@ export const PostList = () => {
     if (realtimeQueryError) return <p>Error : {realtimeQueryError.message}</p>;
 
     const handleSummaryBoard = (boardId: string) => {
-      setAnswer("GPT 생성 중입니다. 이미지가 많은 경우 오래 걸립니다.")
+      reset();
       summaryBoardMutation({
         variables: { boardId: boardId },
         refetchQueries: ['AllRealtime'],
