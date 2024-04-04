@@ -16,7 +16,6 @@ export const PostList = ({ PostList }: Props) => {
     <List
       sx={{
         width: isMobile ? "auto" : "calc(100vh - 250px)",
-        height: "calc(100vh - 64px)",
         overflow: "auto",
         flexGrow: "2",
       }}
