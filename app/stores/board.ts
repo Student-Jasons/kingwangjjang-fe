@@ -10,7 +10,7 @@ interface GPTStore {
 
 export const useGPTStore = create<GPTStore>((set) => ({
   id: 0,
-  answer: 'GPT 요약 중...',
+  answer: 'GPT 생성 중입니다. 이미지가 많은 경우 오래 걸립니다.',
   setAnswer: (value: string) => set(() => ({ answer: value })),
   setAnswerById: (id: string, data: PostCardType[]) => {
     console.log(data)

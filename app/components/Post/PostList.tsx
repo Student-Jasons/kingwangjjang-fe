@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { PostCard } from './PostCard';
 import { List, ListItem } from '@mui/material';
-import { AllRealtimeQuery } from '@/gql/graphql';
-import { useMutation, useQuery } from '@apollo/client';
+import { AllRealtimeQuery, SummaryBoardMutation } from '@/gql/graphql';
+import { ObservableQuery, OperationVariables, useMutation, useQuery } from '@apollo/client';
 import { gql } from '@/gql/gql';
 import { useGPTStore } from "@/stores/board";
 
@@ -21,40 +21,41 @@ query AllRealtime {
 const SUMMARY_BOARD = gql(`
   mutation SummaryBoard($boardId: String!) {
     summaryBoard(boardId: $boardId) {
-      response
+      boardSummary
     }
   }
 `);
 
 export const PostList = () => {
     const { setAnswer } = useGPTStore();
-    const { loading, error, data } = useQuery<AllRealtimeQuery>(realtimqQuery);
-    const [summaryBoardMutation] = useMutation(SUMMARY_BOARD);
+    const { loading: realtimeQueryLoading, error: realtimeQueryError, data: realtimeQueryData } = useQuery<AllRealtimeQuery>(realtimqQuery);
+    const [summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError }] = useMutation<SummaryBoardMutation>(SUMMARY_BOARD, {
+      refetchQueries: [
+        'AllRealtime'
+      ]
+    });
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error : {error.message}</p>;
-    const handleSummaryBoard = async (boardId: string) => {
-        try {
-          const response = await summaryBoardMutation({
-            variables: {
-              boardId: boardId
-            }
-          });
-          const responseData = response.data?.summaryBoard?.response;
-    
-          if (responseData) {
-            setAnswer(responseData);
-          }
-        } catch (error) {
-        }
-      };
+    if (realtimeQueryLoading) return <p>Loading...</p>;
+    if (realtimeQueryError) return <p>Error : {realtimeQueryError.message}</p>;
+
+    const handleSummaryBoard = (boardId: string) => {
+      setAnswer("GPT 생성 중입니다. 이미지가 많은 경우 오래 걸립니다.")
+      summaryBoardMutation({
+        variables: { boardId: boardId },
+        refetchQueries: ['AllRealtime'],
+        async onQueryUpdated(observableQuery) {
+            await observableQuery.refetch();
+            setAnswer( observableQuery.getCurrentResult().data.allRealtime.find((board: any) => board.Id === boardId).GPTAnswer)
+        },
+      });
+    }
 
     return (
         <List sx={{
             maxHeight: 500,
             overflow: "auto",
             }} >
-            {data?.allRealtime && data?.allRealtime.map((board, index) => (
+            {realtimeQueryData?.allRealtime && realtimeQueryData?.allRealtime.map((board, index) => (
                 board && (
                     <ListItem key={index}>
                         <PostCard
