@@ -2,60 +2,48 @@
 
 import {
   Box,
+  Chip,
   Divider,
   List,
   ListItem,
   ListItemText,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import Link from "next/link";
 
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useState } from "react";
 
 export const TemporaryDrawer = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [filterItem, setFilterItem] = useState<string[]>([]);
+
+  const handleFilter = (items: string) => {
+    if (filterItem.includes(items)) {
+      setFilterItem(filterItem.filter((item) => item !== items));
+    } else {
+      setFilterItem([...filterItem, items]);
+    }
+    console.log(filterItem);
+  };
 
   return (
-    <>
-      <Box
-        sx={{
-          width: isMobile ? "auto" : "250px",
-          flexGrow: "0",
-        }}
-      >
-        <List>
-          <ListItem sx={{ paddingX: "24px" }}>
-            <Link href={"/dcinside"}>
-              <ListItemText primary={"디시인사이드"} />
-            </Link>
-          </ListItem>
-          <ListItem sx={{ paddingX: "24px" }}>
-            <Link href={"/ygosu"}>
-              <ListItemText primary={"와이고수"} />
-            </Link>
-          </ListItem>
-          <ListItem sx={{ paddingX: "24px" }}>
-            <Link href={"/ppomppu"}>
-              <ListItemText primary={"뽐뿌"} />
-            </Link>
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              paddingX: "24px",
-            }}
-          >
-            <LogoutIcon />
-            <ListItemText primary={"Log Out"} className="inline" />
-          </ListItem>
-        </List>
-      </Box>
-    </>
+    <Box sx={{ width: "300px" }}>
+      <List>
+        <ListItem>
+          <Typography variant="h6" component="div">
+            필터
+          </Typography>
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
+        <Chip label="dcinside" onClick={() => handleFilter("dcinside")} />
+        <Chip label="ygosu" onClick={() => handleFilter("ygosu")} />
+        <Chip label="ppomppu" onClick={() => handleFilter("ppomppu")} />
+      </List>
+      <Divider />
+    </Box>
   );
 };
