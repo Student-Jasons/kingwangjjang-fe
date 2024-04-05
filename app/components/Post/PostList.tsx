@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { PostCard } from './PostCard';
 import { List, ListItem } from '@mui/material';
 import { AllRealtimeQuery, SummaryBoardMutation } from '@/gql/graphql';
-import { ObservableQuery, OperationVariables, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { gql } from '@/gql/gql';
 import { useGPTStore } from "@/stores/board";
 
@@ -30,9 +30,7 @@ export const PostList = () => {
     const { setAnswer, reset } = useGPTStore();
     const { loading: realtimeQueryLoading, error: realtimeQueryError, data: realtimeQueryData } = useQuery<AllRealtimeQuery>(realtimqQuery);
     const [summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError }] = useMutation<SummaryBoardMutation>(SUMMARY_BOARD, {
-      refetchQueries: [
-        'AllRealtime'
-      ]
+      refetchQueries: [ 'AllRealtime' ]
     });
 
     if (realtimeQueryLoading) return <p>Loading...</p>;
