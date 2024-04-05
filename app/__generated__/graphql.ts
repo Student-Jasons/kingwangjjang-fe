@@ -57,13 +57,7 @@ export type RealTimeType = {
   url: Scalars['String']['output'];
 };
 
-export type SummaryBoardMutation = {
-  __typename?: 'SummaryBoardMutation';
-  boardSummary?: Maybe<Scalars['String']['output']>;
-};
-
 export type AllRealtimeQueryVariables = Exact<{ [key: string]: never; }>;
-
 
 export type AllRealtimeQuery = { __typename?: 'Query', allRealtime?: Array<{ __typename?: 'RealTimeType', Id: string, site: string, title: string, url: string, createTime: any, GPTAnswer: string } | null> | null };
 
