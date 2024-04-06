@@ -16,21 +16,26 @@ import Link from "next/link";
 import { useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
 
+interface Props extends PostCardType {
+  onClickToggle: (boardId: string) => void;
+}
+
 export const PostCard = ({
   id,
   title,
   url,
   createTime,
   GPTAnswer,
-}: PostCardType) => {
+  onClickToggle,
+}: Props) => {
   const [expanded, setExpanded] = useState(false);
-
-  const handleToggle = () => {
+  const handleToggle = (boardId: string) => {
     setExpanded(!expanded);
+    onClickToggle(boardId)
   };
 
   return (
-    <Card sx={{ width: "100%" }} onClick={handleToggle}>
+    <Card sx={{ width: "100%" }} onClick={ () => handleToggle(id) }>
       <CardContent sx={{ display: "flex", flexDirection: "column" }}>
         <Box
           sx={{

@@ -1,14 +1,13 @@
-"use client";
-
-import { PostCardType } from "@/types/board-type";
 import { List, ListItem, useMediaQuery, useTheme } from "@mui/material";
 import { PostCard } from "./PostCard";
+import { AllRealtimeQuery } from "@/app/__generated__/graphql";
 
 interface Props {
-  postItems: PostCardType[];
+  postItems: AllRealtimeQuery;
+  onClickCard: (boardId: string) => void;
 }
 
-export const PostList = ({ postItems }: Props) => {
+export const PostList = ({ postItems, onClickCard }: Props) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -20,10 +19,12 @@ export const PostList = ({ postItems }: Props) => {
 
   return (
     <List sx={listSx}>
-      {postItems.map((post, index) => (
+      { postItems.allRealtime && postItems.allRealtime.map((post, index) => (
+        post &&
         <ListItem key={index}>
           <PostCard
-            id={post.id}
+            onClickToggle={onClickCard}
+            id={post.Id}
             site={post.site}
             title={post.title}
             url={post.url}
