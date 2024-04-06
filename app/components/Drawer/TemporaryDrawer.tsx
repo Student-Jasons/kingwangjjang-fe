@@ -6,14 +6,9 @@ import {
   Divider,
   List,
   ListItem,
-  ListItemText,
+  Stack,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
-import Link from "next/link";
-
-import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
 
 export const TemporaryDrawer = () => {
@@ -25,8 +20,9 @@ export const TemporaryDrawer = () => {
     } else {
       setFilterItem([...filterItem, items]);
     }
-    console.log(filterItem);
   };
+
+  const filters = ["dcinside", "ygosu", "ppomppu"];
 
   return (
     <Box sx={{ width: "300px" }}>
@@ -39,9 +35,11 @@ export const TemporaryDrawer = () => {
       </List>
       <Divider />
       <List>
-        <Chip label="dcinside" onClick={() => handleFilter("dcinside")} />
-        <Chip label="ygosu" onClick={() => handleFilter("ygosu")} />
-        <Chip label="ppomppu" onClick={() => handleFilter("ppomppu")} />
+        <Stack direction="row" spacing={1}>
+          {filters.map((filter) => (
+            <Chip label={filter} onClick={() => handleFilter(filter)} />
+          ))}
+        </Stack>
       </List>
       <Divider />
     </Box>
