@@ -14,7 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { TemporaryDrawer } from "../Drawer/TemporaryDrawer";
+import { TemporaryDrawer } from "@/components/Drawer/TemporaryDrawer";
 import React, { useState } from "react";
 
 export const Header = () => {
@@ -34,7 +34,6 @@ export const Header = () => {
           component="nav"
           color="default"
           sx={{
-            display: "flex",
             boxShadow: "none",
             borderBottom: "1px solid #e0e0e0",
           }}
@@ -44,7 +43,7 @@ export const Header = () => {
               variant="h6"
               noWrap
               component="div"
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, padding: "8px" }}
             >
               킹왕짱헤더
             </Typography>
