@@ -5,30 +5,30 @@ import { List, ListItem, useMediaQuery, useTheme } from "@mui/material";
 import { PostCard } from "./PostCard";
 
 interface Props {
-  PostList: PostCardType[];
+  postItems: PostCardType[];
 }
 
-export const PostList = ({ PostList }: Props) => {
+export const PostList = ({ postItems }: Props) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const listSx = {
+    width: isMobile ? "auto" : "calc(100vh - 250px)",
+    overflow: "auto",
+    flexGrow: "2",
+  };
+
   return (
-    <List
-      sx={{
-        width: isMobile ? "auto" : "calc(100vh - 250px)",
-        overflow: "auto",
-        flexGrow: "2",
-      }}
-    >
-      {PostList.map((board, index) => (
+    <List sx={listSx}>
+      {postItems.map((post, index) => (
         <ListItem key={index}>
           <PostCard
-            id={board.id}
-            site={board.site}
-            title={board.title}
-            url={board.url}
-            createTime={board.createTime}
-            GPTAnswer={board.GPTAnswer}
+            id={post.id}
+            site={post.site}
+            title={post.title}
+            url={post.url}
+            createTime={post.createTime}
+            GPTAnswer={post.GPTAnswer}
           ></PostCard>
         </ListItem>
       ))}
