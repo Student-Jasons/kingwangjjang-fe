@@ -14,8 +14,6 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
-
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import LaunchIcon from "@mui/icons-material/Launch";
 
 export const PostCard = ({
@@ -46,22 +44,37 @@ export const PostCard = ({
               {title}
             </Typography>
           </Tooltip>
-          
         </Box>
         <Box>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <div className="flex justify-between items-center">
-            <Typography
-              variant="body1"
-              className="whitespace-pre-wrap break-word"
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "6px 8px",
+              }}
             >
-              {GPTAnswer}
-            </Typography>
-            <Link href={url} target="_blank" onClick={(e) => e.stopPropagation()}>
-              <LaunchIcon />
-            </Link>
-          </div>
-        </Collapse>
+              <Typography
+                variant="body1"
+                component="div"
+                sx={{
+                  whiteSpace: "pre-wrap",
+                  wordBreak: "break-word",
+                }}
+              >
+                {GPTAnswer}
+              </Typography>
+              <Link
+                href={url}
+                target="_blank"
+                passHref
+                onClick={(e) => e.stopPropagation()}
+              >
+                <LaunchIcon />
+              </Link>
+            </Box>
+          </Collapse>
         </Box>
       </CardContent>
     </Card>
