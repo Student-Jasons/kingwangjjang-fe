@@ -1,6 +1,6 @@
 import { PostCardType } from '@/types/board-type';
 import { Card, CardContent, Tooltip, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React from 'react'
 import LaunchIcon from '@mui/icons-material/Launch';
 import Link from 'next/link';
 
