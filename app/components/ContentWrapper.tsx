@@ -35,7 +35,9 @@ export const ContentWrapper = () => {
   const { setAnswer, reset } = useGPTStore();
   const { loading: realtimeQueryLoading, error: realtimeQueryError, data: realtimeQueryData } = useQuery<AllRealtimeQuery>(REALTIME);
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},] = useMutation<SummaryBoardMutation>(SUMMARY_BOARD, { refetchQueries: ["AllRealtime"] });
-  const filteredPosts = sites.map((site) =>  realtimeQueryData?.allRealtime && realtimeQueryData?.allRealtime.filter((post) => post && post.site === site));
+  const filteredPosts = sites.map((site) =>  realtimeQueryData?.allRealtime && realtimeQueryData?.allRealtime.filter((post) => {
+    return post && post.site === site
+  }));
   
   const handleSummaryBoard = (boardId: string) => {
     reset();
@@ -56,10 +58,10 @@ export const ContentWrapper = () => {
   return (
     <Grid container sx={{ width: "100%", flexFlow: "row" }}>
       { isMobile ? (
-          realtimeQueryData && <PostList onClickCard={handleSummaryBoard} postItems={realtimeQueryData} />
+          realtimeQueryData?.allRealtime && <PostList onClickCard={handleSummaryBoard} postItems={realtimeQueryData.allRealtime} />
       ) : (
         filteredPosts.map((posts, index) => (
-          realtimeQueryData && <PostList onClickCard={handleSummaryBoard} key={index} postItems={realtimeQueryData} />
+          realtimeQueryData && <PostList onClickCard={handleSummaryBoard} key={index} postItems={posts} />
         ))
       )}
     </Grid>

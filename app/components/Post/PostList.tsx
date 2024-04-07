@@ -3,7 +3,7 @@ import { PostCard } from "./PostCard";
 import { AllRealtimeQuery } from "@/app/__generated__/graphql";
 
 interface Props {
-  postItems: AllRealtimeQuery;
+  postItems: AllRealtimeQuery['allRealtime'];
   onClickCard: (boardId: string) => void;
 }
 
@@ -19,7 +19,7 @@ export const PostList = ({ postItems, onClickCard }: Props) => {
 
   return (
     <List sx={listSx}>
-      { postItems.allRealtime && postItems.allRealtime.map((post, index) => (
+      { postItems && postItems.map((post, index) => (
         post &&
         <ListItem key={index}>
           <PostCard
