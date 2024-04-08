@@ -34,9 +34,7 @@ export const ContentWrapper = () => {
   const { setAnswer, reset } = useGPTStore();
   const { loading: realtimeQueryLoading, error: realtimeQueryError, data: realtimeQueryData } = useQuery<AllRealtimeQuery>(REALTIME);
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},] = useMutation<SummaryBoardMutation>(SUMMARY_BOARD, { refetchQueries: ["AllRealtime"] });
-  const filteredPosts = sites.map((site) =>  realtimeQueryData?.allRealtime && realtimeQueryData?.allRealtime.filter((post) => {
-    return post && post.site === site
-  }));
+  const filteredPosts = sites.map( (site) =>  realtimeQueryData?.allRealtime && realtimeQueryData?.allRealtime.filter((post) => post && post.site === site ));
   
   const handleSummaryBoard = (boardId: string) => {
     reset();
