@@ -1,4 +1,4 @@
-import { List, ListItem, useMediaQuery, useTheme } from "@mui/material";
+import { List, ListItem  } from "@mui/material";
 import { PostCard } from "./PostCard";
 import { AllRealtimeQuery } from "@/app/__generated__/graphql";
 
@@ -8,31 +8,28 @@ interface Props {
 }
 
 export const PostList = ({ postItems, onClickCard }: Props) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const listSx = {
-    width: isMobile ? "auto" : "calc(100vh - 250px)",
-    overflow: "auto",
-    flexGrow: "2",
-  };
-
   return (
-    <List sx={listSx}>
-      { postItems && postItems.map((post, index) => (
-        post &&
-        <ListItem key={index}>
-          <PostCard
-            onClickToggle={onClickCard}
-            id={post.Id}
-            site={post.site}
-            title={post.title}
-            url={post.url}
-            createTime={post.createTime}
-            GPTAnswer={post.GPTAnswer}
-          ></PostCard>
-        </ListItem>
-      ))}
-    </List>
+      <List sx={{
+        width: '100%',
+        bgcolor: 'background.paper',
+        position: 'relative',
+        overflow: 'auto',
+        maxHeight: '25%',
+      }}>
+        { postItems && postItems.map((post, index) => (
+          post &&
+          <ListItem key={index}>
+            <PostCard
+              onClickToggle={onClickCard}
+              id={post.Id}
+              site={post.site}
+              title={post.title}
+              url={post.url}
+              createTime={post.createTime}
+              GPTAnswer={post.GPTAnswer}
+            ></PostCard>
+          </ListItem>
+        ))}
+      </List>
   );
 };

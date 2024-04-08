@@ -1,12 +1,11 @@
-"use client";
-
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+'use client'
+import { useMediaQuery, useTheme } from "@mui/material";
 import { PostList } from "@/components/Post/PostList";
-import { boardData } from "@/app/ testdata/bestboard";
 import { gql } from "@/gql/gql";
 import { AllRealtimeQuery, SummaryBoardMutation } from "@/gql/graphql";
 import { useGPTStore } from "@/stores/board";
 import { useMutation, useQuery } from "@apollo/client";
+import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 const REALTIME = gql(`
 query AllRealtime {
@@ -54,16 +53,19 @@ export const ContentWrapper = () => {
   if (realtimeQueryLoading) return <p>Loading...</p>;
   if (realtimeQueryError) return <p>Error : {realtimeQueryError.message}</p>;
 
+  if(isMobile) return realtimeQueryData?.allRealtime && <PostList onClickCard={handleSummaryBoard} postItems={realtimeQueryData.allRealtime} />
 
   return (
-    <Grid container sx={{ width: "100%", flexFlow: "row" }}>
-      { isMobile ? (
-          realtimeQueryData?.allRealtime && <PostList onClickCard={handleSummaryBoard} postItems={realtimeQueryData.allRealtime} />
-      ) : (
-        filteredPosts.map((posts, index) => (
-          realtimeQueryData && <PostList onClickCard={handleSummaryBoard} key={index} postItems={posts} />
-        ))
-      )}
+    <Grid container spacing={2}>
+        {
+          filteredPosts.map((posts, index) => (
+            realtimeQueryData ? (
+              <Grid xs={6} key={index}>
+                <PostList onClickCard={handleSummaryBoard} postItems={posts} />
+              </Grid>
+            ) : null
+          ))
+        }
     </Grid>
   );
 };

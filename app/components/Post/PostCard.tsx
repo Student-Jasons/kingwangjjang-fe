@@ -1,14 +1,9 @@
-"use client";
-
 import { PostCardType } from "@/app/types/board-type";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Collapse,
-  Icon,
-  IconButton,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -20,14 +15,7 @@ interface Props extends PostCardType {
   onClickToggle: (boardId: string) => void;
 }
 
-export const PostCard = ({
-  id,
-  title,
-  url,
-  createTime,
-  GPTAnswer,
-  onClickToggle,
-}: Props) => {
+export const PostCard = ({ id, title, url, createTime, GPTAnswer, onClickToggle, }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const handleToggle = (boardId: string) => {
     setExpanded(!expanded);
@@ -35,7 +23,7 @@ export const PostCard = ({
   };
 
   return (
-    <Card sx={{ width: "100%" }} onClick={ () => handleToggle(id) }>
+    <Card sx={{ width: "100%"}} onClick={ () => handleToggle(id) }>
       <CardContent sx={{ display: "flex", flexDirection: "column" }}>
         <Box
           sx={{
