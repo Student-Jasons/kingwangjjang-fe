@@ -19,7 +19,9 @@ export const PostCard = ({ id, title, url, createTime, GPTAnswer, onClickToggle,
   const [expanded, setExpanded] = useState(false);
   const handleToggle = (boardId: string) => {
     setExpanded(!expanded);
-    onClickToggle(boardId)
+    if (!expanded) {
+      onClickToggle(boardId); 
+    }
   };
 
   return (
