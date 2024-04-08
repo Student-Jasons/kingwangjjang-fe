@@ -30,7 +30,7 @@ const SUMMARY_BOARD = gql(`
 export const ContentWrapper = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const sites = ["dcinside", "ygosu", "ppomppu"];
+  const sites = ["dcinside"]; // 새로운 값 생성될 때 추가
   const { setAnswer, reset } = useGPTStore();
   const { loading: realtimeQueryLoading, error: realtimeQueryError, data: realtimeQueryData } = useQuery<AllRealtimeQuery>(REALTIME);
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},] = useMutation<SummaryBoardMutation>(SUMMARY_BOARD, { refetchQueries: ["AllRealtime"] });
@@ -52,7 +52,6 @@ export const ContentWrapper = () => {
 
   if (realtimeQueryLoading) return <p>Loading...</p>;
   if (realtimeQueryError) return <p>Error : {realtimeQueryError.message}</p>;
-
   if(isMobile) return realtimeQueryData?.allRealtime && <PostList onClickCard={handleSummaryBoard} postItems={realtimeQueryData.allRealtime} />
 
   return (
@@ -60,7 +59,7 @@ export const ContentWrapper = () => {
         {
           filteredPosts.map((posts, index) => (
             realtimeQueryData ? (
-              <Grid xs={6} key={index}>
+              <Grid xs={12} md={6} key={index}>
                 <PostList onClickCard={handleSummaryBoard} postItems={posts} />
               </Grid>
             ) : null

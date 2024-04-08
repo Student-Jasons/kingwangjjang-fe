@@ -14,7 +14,7 @@ export const PostList = ({ postItems, onClickCard }: Props) => {
         bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'auto',
-        maxHeight: '25%',
+        height: 500
       }}>
         { postItems && postItems.map((post, index) => (
           post &&
