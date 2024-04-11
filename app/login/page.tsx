@@ -1,6 +1,14 @@
 "use client";
 
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { ChangeEvent, useState } from "react";
 
 export default function Login() {
@@ -15,9 +23,19 @@ export default function Login() {
       [name]: value,
     }));
   };
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Container>
+    <Container
+      maxWidth="sm"
+      sx={{
+        height: isMobile ? "auto" : "100vh",
+        display: "flex",
+        alignItems: isMobile ? "inherit" : "center",
+        justifyContent: "center",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -28,7 +46,7 @@ export default function Login() {
       >
         <Typography variant="h3">Instagram Login</Typography>
         <TextField
-          label="UserId"
+          label="Id"
           variant="outlined"
           value={user.userId}
           fullWidth
@@ -44,18 +62,22 @@ export default function Login() {
           value={user.userPw}
           fullWidth
           margin="normal"
-          name="password"
+          name="userPw"
           onChange={handleInputChange}
         />
         <Button
           variant="contained"
+          color="inherit"
           fullWidth
           sx={{
-            backgroundColor: "#1976D2",
             marginTop: "16px",
             marginBottom: "8px",
             paddingX: "16.5px",
             paddingY: "14px",
+            "&:hover": {
+              backgroundColor: "primary.main",
+              color: "#fff",
+            },
           }}
         >
           Login
