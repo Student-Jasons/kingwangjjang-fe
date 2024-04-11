@@ -35,6 +35,7 @@ export default function Login() {
           margin="normal"
           name="userId"
           onChange={handleInputChange}
+          autoFocus
         />
         <TextField
           label="Password"
@@ -50,11 +51,11 @@ export default function Login() {
           variant="contained"
           fullWidth
           sx={{
-            color: "primary.main",
-
-            "&:hover": {
-              color: "#fff",
-            },
+            backgroundColor: "#1976D2",
+            marginTop: "16px",
+            marginBottom: "8px",
+            paddingX: "16.5px",
+            paddingY: "14px",
           }}
         >
           Login
