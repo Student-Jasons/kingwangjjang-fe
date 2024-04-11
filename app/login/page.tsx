@@ -1,19 +1,27 @@
 "use client";
 
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export default function Login() {
   const [user, setUser] = useState({
     userId: "",
     userPw: "",
   });
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
   return (
     <Container>
       <Box
         sx={{
           display: "flex",
+          flexFlow: "column",
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -26,6 +34,7 @@ export default function Login() {
           fullWidth
           margin="normal"
           name="userId"
+          onChange={handleInputChange}
         />
         <TextField
           label="Password"
@@ -35,8 +44,19 @@ export default function Login() {
           fullWidth
           margin="normal"
           name="password"
+          onChange={handleInputChange}
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{
+            color: "primary.main",
+
+            "&:hover": {
+              color: "#fff",
+            },
+          }}
+        >
           Login
         </Button>
       </Box>
