@@ -6,6 +6,7 @@ import {
   Box,
   Drawer,
   IconButton,
+  Link,
   Slide,
   Toolbar,
   Typography,
@@ -18,46 +19,39 @@ import { TemporaryDrawer } from "@/components/Drawer/TemporaryDrawer";
 import React, { useState } from "react";
 
 export const Header = () => {
-  const [open, setOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [filterOpen, setFilterOpen] = useState(false);
   const trigger = useScrollTrigger();
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleFilterOpen = () => {
+    setFilterOpen(true);
   };
 
   return (
-    <Box sx={{ height: isMobile ? "54px" : "64px" }}>
+    <Box>
       <Slide appear={false} direction="down" in={!trigger}>
-        <AppBar
-          component="nav"
-          color="default"
+        <AppBar component="nav" color="default"
           sx={{
-            boxShadow: "none",
-            borderBottom: "1px solid #e0e0e0",
-          }}
-        >
-          <Toolbar component="div">
+            borderBottom: "1px solid #e0e0e0",}}>
+          <Toolbar>
             <Typography
               variant="h6"
-              noWrap
-              component="div"
               sx={{ flexGrow: 1, padding: "8px" }}
             >
-              킹왕짱헤더
+              Hello, 
             </Typography>
-            <IconButton onClick={handleOpen}>
+            <IconButton onClick={handleFilterOpen}>
               <FilterAltIcon />
             </IconButton>
             <IconButton>
-              <Avatar />
+              <Link href="/login">
+                <Avatar />
+              </Link>
             </IconButton>
           </Toolbar>
         </AppBar>
       </Slide>
 
-      <Drawer open={open} onClose={() => setOpen(false)} anchor="right">
+      <Drawer open={filterOpen} onClose={() => setFilterOpen(false)} anchor="right">
         <TemporaryDrawer />
       </Drawer>
     </Box>
