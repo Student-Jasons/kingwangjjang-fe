@@ -6,6 +6,7 @@ import {
   Box,
   Drawer,
   IconButton,
+  Link,
   Slide,
   Toolbar,
   Typography,
@@ -51,7 +52,9 @@ export const Header = () => {
               <FilterAltIcon />
             </IconButton>
             <IconButton>
-              <Avatar />
+              <Link href="/login">
+                <Avatar />
+              </Link>
             </IconButton>
           </Toolbar>
         </AppBar>
