@@ -12,20 +12,20 @@ import { useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
 
 interface Props extends PostCardType {
-  onClickToggle: (boardId: string) => void;
+  onClickToggle: (boardId: string, site: string) => void;
 }
 
-export const PostCard = ({ id, title, url, createTime, GPTAnswer, onClickToggle, }: Props) => {
+export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, onClickToggle, }: Props) => {
   const [expanded, setExpanded] = useState(false);
-  const handleToggle = (boardId: string) => {
+  const handleToggle = (boardId: string, site: string) => {
     setExpanded(!expanded);
     if (!expanded) {
-      onClickToggle(boardId); 
+      onClickToggle(boardId, site); 
     }
   };
 
   return (
-    <Card sx={{ width: "100%"}} onClick={ () => handleToggle(id) }>
+    <Card sx={{ width: "100%"}} onClick={ () => handleToggle(id, site) }>
       <CardContent sx={{ display: "flex", flexDirection: "column" }}>
         <Box
           sx={{
