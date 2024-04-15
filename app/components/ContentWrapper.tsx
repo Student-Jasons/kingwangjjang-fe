@@ -44,7 +44,7 @@ export const ContentWrapper = () => {
       refetchQueries: ['AllRealtime'],
       async onQueryUpdated(observableQuery) {
           await observableQuery.refetch();
-          setAnswer(observableQuery.getCurrentResult().data.allRealtime.find((board: any) => board.Id === boardId).GPTAnswer)
+          // setAnswer(observableQuery.getCurrentResult().data.allRealtime.find((board: any) => board.Id === boardId).GPTAnswer)
       },
     });
   }
