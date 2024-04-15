@@ -22,7 +22,7 @@ query AllRealtime {
 
 const SUMMARY_BOARD = gql(`
   mutation SummaryBoard($boardId: String!, $site: String!) {
-      summaryBoard(boardId: $boardId, site:$site) {
+      summaryBoard(boardId: $boardId, site: $site) {
           boardSummary
       }
   }
@@ -37,10 +37,10 @@ export const ContentWrapper = () => {
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},] = useMutation<SummaryBoardMutation>(SUMMARY_BOARD, { refetchQueries: ["AllRealtime"] });
   const filteredPosts = sites.map( (site) =>  realtimeQueryData?.allRealtime && realtimeQueryData?.allRealtime.filter((post) => post && post.site === site ));
   
-  const handleSummaryBoard = (boardId: string) => {
+  const handleSummaryBoard = (boardId: string, site: string) => {
     reset();
     summaryBoardMutation({
-      variables: { boardId: boardId },
+      variables: { boardId: boardId, site: site },
       refetchQueries: ['AllRealtime'],
       async onQueryUpdated(observableQuery) {
           await observableQuery.refetch();

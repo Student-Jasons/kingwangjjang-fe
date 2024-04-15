@@ -4,7 +4,7 @@ import { AllRealtimeQuery } from "@/app/__generated__/graphql";
 
 interface Props {
   postItems: AllRealtimeQuery['allRealtime'];
-  onClickCard: (boardId: string) => void;
+  onClickCard: (boardId: string, stie: string) => void;
 }
 
 export const PostList = ({ postItems, onClickCard }: Props) => {
@@ -21,7 +21,7 @@ export const PostList = ({ postItems, onClickCard }: Props) => {
           <ListItem key={index}>
             <PostCard
               onClickToggle={onClickCard}
-              id={post.Id}
+              id={post.boardId}
               site={post.site}
               title={post.title}
               url={post.url}

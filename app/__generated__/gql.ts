@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\nquery AllRealtime {\n  allRealtime {\n    id\n    boardId\n    site\n    title\n    url\n    createTime\n    GPTAnswer\n  }\n}": types.AllRealtimeDocument,
-    "\n  mutation SummaryBoard($boardId: String!, $site: String!) {\n      summaryBoard(boardId: $boardId, site:$site) {\n          boardSummary\n      }\n  }\n": types.SummaryBoardDocument,
+    "\n  mutation SummaryBoard($boardId: String!, $site: String!) {\n      summaryBoard(boardId: $boardId, site: $site) {\n          boardSummary\n      }\n  }\n": types.SummaryBoardDocument,
 };
 
 /**
@@ -38,7 +38,7 @@ export function gql(source: "\nquery AllRealtime {\n  allRealtime {\n    id\n   
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation SummaryBoard($boardId: String!, $site: String!) {\n      summaryBoard(boardId: $boardId, site:$site) {\n          boardSummary\n      }\n  }\n"): (typeof documents)["\n  mutation SummaryBoard($boardId: String!, $site: String!) {\n      summaryBoard(boardId: $boardId, site:$site) {\n          boardSummary\n      }\n  }\n"];
+export function gql(source: "\n  mutation SummaryBoard($boardId: String!, $site: String!) {\n      summaryBoard(boardId: $boardId, site: $site) {\n          boardSummary\n      }\n  }\n"): (typeof documents)["\n  mutation SummaryBoard($boardId: String!, $site: String!) {\n      summaryBoard(boardId: $boardId, site: $site) {\n          boardSummary\n      }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
