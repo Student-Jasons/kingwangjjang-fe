@@ -32,10 +32,9 @@ const SUMMARY_BOARD = gql(`
 export const ContentWrapper = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const sites = ["dcinside", "ygosu"]; // 새로운 값 생성될 때 추가
   const [pageIndex, setPageIndex] = useState<String>();
 
-  const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData } 
+  const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, refetch: refetchBoardContents} 
   = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
@@ -55,9 +54,7 @@ export const ContentWrapper = () => {
   if (boardContentsQueryError) return <p>Error : {boardContentsQueryError.message}</p>;
   if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />
 
-  return (
-    <Grid container spacing={2}>
-       {boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />}
-    </Grid>
+  return(
+      boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />
   );
 };
