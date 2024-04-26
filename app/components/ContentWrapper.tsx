@@ -40,7 +40,7 @@ export const ContentWrapper = () => {
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
   
-  const filteredPosts = sites.map( (site) =>  boardContentsData?.boardContentsByDate && boardContentsData.boardContentsByDate.filter((post) => post && post.site === site ));
+  // const filteredPosts = sites.map( (site) =>  boardContentsData?.boardContentsByDate && boardContentsData.boardContentsByDate.filter((post) => post && post.site === site ));
   const handleSummaryBoard = (boardId: string, site: string) => {
     summaryBoardMutation({
       variables: { boardId: boardId, site: site },
@@ -57,15 +57,7 @@ export const ContentWrapper = () => {
 
   return (
     <Grid container spacing={2}>
-        {
-          filteredPosts.map((posts, index) => (
-            boardContentsData ? (
-              <Grid xs={12} md={6} key={index}>
-                <PostList onClickCard={handleSummaryBoard} postItems={posts} />
-              </Grid>
-            ) : null
-          ))
-        }
+       {boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />}
     </Grid>
   );
 };
