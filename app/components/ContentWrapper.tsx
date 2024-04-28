@@ -6,7 +6,7 @@ import {  BoardContentsByDateDocument, SummaryBoardMutation, MutationSummaryBoar
 import { useGPTStore } from "@/stores/board";
 import { TypedDocumentNode, useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const REALTIME = gql(`
 query BoardContentsByDate($index: String!) {
@@ -32,8 +32,9 @@ const SUMMARY_BOARD = gql(`
 export const ContentWrapper = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [pageIndex, setPageIndex] = useState<String>();
-
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const loadingRef = useRef(null);
+  
   const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, refetch: refetchBoardContents} 
   = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
@@ -49,12 +50,41 @@ export const ContentWrapper = () => {
       },
     });
   }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !boardContentsQueryLoading && !boardContentsQueryError) {
+          setPageIndex(prevPageIndex => prevPageIndex + 1); 
+          refetchBoardContents({ index: (pageIndex + 1).toString()})
+          console.log('1')
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (loadingRef.current) {
+      observer.observe(loadingRef.current);
+    }
+
+    return () => {
+        if (loadingRef.current) {
+          observer.unobserve(loadingRef.current);
+        }
+    };
+  }, [boardContentsQueryLoading, boardContentsQueryError, pageIndex]);
 
   if (boardContentsQueryLoading) return <p>Loading...</p>;
   if (boardContentsQueryError) return <p>Error : {boardContentsQueryError.message}</p>;
   if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />
-
+  
   return(
-      boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />
+    <div>
+      {boardContentsData?.boardContentsByDate && (
+        <>
+          <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />
+          <div ref={loadingRef}></div> {/* Intersection Observer 대상으로 사용될 빈 div */}
+        </>
+      )}
+    </div>
   );
 };
