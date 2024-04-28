@@ -56,7 +56,6 @@ export const ContentWrapper = () => {
         if (entry.isIntersecting && !boardContentsQueryLoading && !boardContentsQueryError) {
           setPageIndex(prevPageIndex => prevPageIndex + 1); 
           refetchBoardContents({ index: (pageIndex + 1).toString()})
-          console.log('1')
         }
       },
       { threshold: 0 }
@@ -71,7 +70,7 @@ export const ContentWrapper = () => {
           observer.unobserve(loadingRef.current);
         }
     };
-  }, [boardContentsQueryLoading, boardContentsQueryError, pageIndex]);
+  }, [boardContentsQueryLoading, boardContentsQueryError]);
 
   if (boardContentsQueryLoading) return <p>Loading...</p>;
   if (boardContentsQueryError) return <p>Error : {boardContentsQueryError.message}</p>;
