@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\nquery AllRealtime {\n  allRealtime {\n    id\n    boardId\n    site\n    title\n    url\n    createTime\n    GPTAnswer\n  }\n}": types.AllRealtimeDocument,
+    "\nquery BoardContentsByDate($index: String!) {\n  boardContentsByDate(index: $index) {\n    boardId\n    site\n    rank\n    title\n    url\n    createTime\n    GPTAnswer\n}\n}": types.BoardContentsByDateDocument,
     "\n  mutation SummaryBoard($boardId: String!, $site: String!) {\n      summaryBoard(boardId: $boardId, site: $site) {\n          boardSummary\n      }\n  }\n": types.SummaryBoardDocument,
 };
 
@@ -34,7 +34,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nquery AllRealtime {\n  allRealtime {\n    id\n    boardId\n    site\n    title\n    url\n    createTime\n    GPTAnswer\n  }\n}"): (typeof documents)["\nquery AllRealtime {\n  allRealtime {\n    id\n    boardId\n    site\n    title\n    url\n    createTime\n    GPTAnswer\n  }\n}"];
+export function gql(source: "\nquery BoardContentsByDate($index: String!) {\n  boardContentsByDate(index: $index) {\n    boardId\n    site\n    rank\n    title\n    url\n    createTime\n    GPTAnswer\n}\n}"): (typeof documents)["\nquery BoardContentsByDate($index: String!) {\n  boardContentsByDate(index: $index) {\n    boardId\n    site\n    rank\n    title\n    url\n    createTime\n    GPTAnswer\n}\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

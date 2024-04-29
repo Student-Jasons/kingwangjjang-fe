@@ -22,16 +22,26 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type BoardSummaryType = {
+  __typename?: 'BoardSummaryType';
+  GPTAnswer?: Maybe<Scalars['String']['output']>;
+  boardId?: Maybe<Scalars['String']['output']>;
+  createTime?: Maybe<Scalars['DateTime']['output']>;
+  rank?: Maybe<Scalars['String']['output']>;
+  site?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
 export type DailyType = {
   __typename?: 'DailyType';
-  GPTAnswer: Scalars['String']['output'];
-  boardId: Scalars['String']['output'];
-  createTime: Scalars['DateTime']['output'];
-  id: Scalars['ID']['output'];
-  rank: Scalars['Int']['output'];
-  site: Scalars['String']['output'];
-  title: Scalars['String']['output'];
-  url: Scalars['String']['output'];
+  GPTAnswer?: Maybe<Scalars['String']['output']>;
+  boardId?: Maybe<Scalars['String']['output']>;
+  createTime?: Maybe<Scalars['DateTime']['output']>;
+  rank?: Maybe<Scalars['String']['output']>;
+  site?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 export type Mutation = {
@@ -49,17 +59,22 @@ export type Query = {
   __typename?: 'Query';
   allDaily?: Maybe<Array<Maybe<DailyType>>>;
   allRealtime?: Maybe<Array<Maybe<RealTimeType>>>;
+  boardContentsByDate?: Maybe<Array<Maybe<BoardSummaryType>>>;
+};
+
+
+export type QueryBoardContentsByDateArgs = {
+  index: Scalars['String']['input'];
 };
 
 export type RealTimeType = {
   __typename?: 'RealTimeType';
-  GPTAnswer: Scalars['String']['output'];
-  boardId: Scalars['String']['output'];
-  createTime: Scalars['DateTime']['output'];
-  id: Scalars['ID']['output'];
-  site: Scalars['String']['output'];
-  title: Scalars['String']['output'];
-  url: Scalars['String']['output'];
+  GPTAnswer?: Maybe<Scalars['String']['output']>;
+  boardId?: Maybe<Scalars['String']['output']>;
+  createTime?: Maybe<Scalars['DateTime']['output']>;
+  site?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 export type SummaryBoardMutation = {
@@ -67,10 +82,12 @@ export type SummaryBoardMutation = {
   boardSummary?: Maybe<Scalars['String']['output']>;
 };
 
-export type AllRealtimeQueryVariables = Exact<{ [key: string]: never; }>;
+export type BoardContentsByDateQueryVariables = Exact<{
+  index: Scalars['String']['input'];
+}>;
 
 
-export type AllRealtimeQuery = { __typename?: 'Query', allRealtime?: Array<{ __typename?: 'RealTimeType', id: string, boardId: string, site: string, title: string, url: string, createTime: any, GPTAnswer: string } | null> | null };
+export type BoardContentsByDateQuery = { __typename?: 'Query', boardContentsByDate?: Array<{ __typename?: 'BoardSummaryType', boardId?: string | null, site?: string | null, rank?: string | null, title?: string | null, url?: string | null, createTime?: any | null, GPTAnswer?: string | null } | null> | null };
 
 export type SummaryBoardMutationVariables = Exact<{
   boardId: Scalars['String']['input'];
@@ -78,5 +95,8 @@ export type SummaryBoardMutationVariables = Exact<{
 }>;
 
 
-export const AllRealtimeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllRealtime"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allRealtime"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"boardId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"createTime"}},{"kind":"Field","name":{"kind":"Name","value":"GPTAnswer"}}]}}]}}]} as unknown as DocumentNode<AllRealtimeQuery, AllRealtimeQueryVariables>;
+// export type SummaryBoardMutation = { __typename?: 'Mutation', summaryBoard?: { __typename?: 'SummaryBoardMutation', boardSummary?: string | null } | null };
+
+
+export const BoardContentsByDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BoardContentsByDate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"index"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardContentsByDate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"index"},"value":{"kind":"Variable","name":{"kind":"Name","value":"index"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"rank"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"createTime"}},{"kind":"Field","name":{"kind":"Name","value":"GPTAnswer"}}]}}]}}]} as unknown as DocumentNode<BoardContentsByDateQuery, BoardContentsByDateQueryVariables>;
 export const SummaryBoardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SummaryBoard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"boardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"summaryBoard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"boardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"boardId"}}},{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardSummary"}}]}}]}}]} as unknown as DocumentNode<SummaryBoardMutation, SummaryBoardMutationVariables>;
