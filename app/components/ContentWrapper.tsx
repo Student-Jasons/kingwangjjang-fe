@@ -35,7 +35,7 @@ export const ContentWrapper = () => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   const loadingRef = useRef(null);
   
-  const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, refetch: refetchBoardContents} 
+  const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, refetch: refetchBoardContents, fetchMore} 
   = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
@@ -51,26 +51,50 @@ export const ContentWrapper = () => {
     });
   }
   useEffect(() => {
+    // refetchBoardContents({ index: (pageIndex).toString()})
+    console.log('pageIndex', pageIndex)
+    if (pageIndex > 0) {
+      fetchMore({
+        variables: {
+          index: (pageIndex).toString()
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) return previousResult; // Return previous result if no new data
+          return {
+            boardContentsByDate: [
+              ...(previousResult.boardContentsByDate || []),
+              ...(fetchMoreResult.boardContentsByDate || [])
+            ]
+          };
+        },
+      })
+    }
+  },[pageIndex])
+
+
+  useEffect(() => {
+    let observerRefValue = null;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !boardContentsQueryLoading && !boardContentsQueryError) {
           setPageIndex(prevPageIndex => prevPageIndex + 1); 
-          refetchBoardContents({ index: (pageIndex + 1).toString()})
+          console.log(pageIndex)
         }
       },
-      { threshold: 0 }
+      { threshold: 0.5 }
     );
 
     if (loadingRef.current) {
       observer.observe(loadingRef.current);
+      observerRefValue = loadingRef.current;
     }
 
     return () => {
-        if (loadingRef.current) {
-          observer.unobserve(loadingRef.current);
+        if (observerRefValue) {
+          observer.unobserve(observerRefValue);
         }
     };
-  }, [boardContentsQueryLoading, boardContentsQueryError]);
+  }, [boardContentsQueryError, boardContentsQueryLoading]);
 
   if (boardContentsQueryLoading) return <p>Loading...</p>;
   if (boardContentsQueryError) return <p>Error : {boardContentsQueryError.message}</p>;
