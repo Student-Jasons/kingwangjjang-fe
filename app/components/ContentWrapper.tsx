@@ -35,7 +35,7 @@ export const ContentWrapper = () => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   const loadingRef = useRef(null);
   
-  const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, refetch: refetchBoardContents, fetchMore} 
+  const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, fetchMore} 
   = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
@@ -51,7 +51,6 @@ export const ContentWrapper = () => {
     });
   }
   useEffect(() => {
-    // refetchBoardContents({ index: (pageIndex).toString()})
     console.log('pageIndex', pageIndex)
     if (pageIndex > 0) {
       fetchMore({
@@ -69,11 +68,10 @@ export const ContentWrapper = () => {
         },
       })
     }
-  },[pageIndex])
-
+  }, [pageIndex])
 
   useEffect(() => {
-    let observerRefValue = null;
+    let observerRefValue: any = null;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !boardContentsQueryLoading && !boardContentsQueryError) {
