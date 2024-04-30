@@ -3,6 +3,7 @@ import {
   Box,
   Card,
   CardContent,
+  Chip,
   Collapse,
   Tooltip,
   Typography,
@@ -10,12 +11,13 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
+import { orange } from "@mui/material/colors";
 
 interface Props extends PostCardType {
   onClickToggle: (boardId: string, site: string) => void;
 }
 
-export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, onClickToggle, }: Props) => {
+export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, onClickToggle, }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const handleToggle = (boardId: string, site: string) => {
     setExpanded(!expanded);
@@ -23,10 +25,14 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, onClickT
       onClickToggle(boardId, site); 
     }
   };
-
+  const isNotRealtime: boolean = rank !== null
   return (
     <Card sx={{ width: "100%"}} onClick={ () => handleToggle(id, site) }>
       <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+        <Box>
+          <Chip label={site} size="small" color="primary"/>
+          {isNotRealtime && <Chip label={rank} size="small" sx={{ backgroundColor: orange[100] }}/>}
+        </Box>
         <Box
           sx={{
             display: "flex",

@@ -22,6 +22,7 @@ export const PostList = ({ postItems, onClickCard }: Props) => {
             <PostCard
               onClickToggle={onClickCard}
               id={post.boardId as string}
+              rank={post.rank as string} 
               site={post.site as string}
               title={post.title as string}
               url={post.url as string}
