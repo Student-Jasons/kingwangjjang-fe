@@ -31,7 +31,7 @@ const SUMMARY_BOARD = gql(`
 
 export const ContentWrapper = () => {
   const theme = useTheme();
-  const [modifiedData, setModifiedData] = useState<BoardContentsByDateQuery>();
+  const [modifiedData, setModifiedData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [pageIndex, setPageIndex] = useState<number>(0);
   const loadingRef = useRef(null);
@@ -101,14 +101,15 @@ export const ContentWrapper = () => {
   useEffect(()=>{
     const modifiedData = (boardContentsData?.boardContentsByDate)?.map((value) => {
       if (value?.site === "ygosu") {
-        return { ...value, site: "YG" };
+        return { ...value, site: "와이고수" };
       } else if (value?.site === "dcinside") {
-        return { ...value, site: "DC" };
+        return { ...value, site: "디시인사이드" };
+      } else if (value?.site === "ppomppu") {
+        return { ...value, site: "뽐뿌" };
       }
       return value;
     });
-    console.log(modifiedData)
-    setModifiedData(modifiedData as SetStateAction<BoardContentsByDateQuery | undefined>);
+    setModifiedData(modifiedData);
   },[boardContentsData])
 
   if (boardContentsQueryLoading) return <p>Loading...</p>;
