@@ -2,11 +2,11 @@
 import { useMediaQuery, useTheme } from "@mui/material";
 import { PostList } from "@/components/Post/PostList";
 import { gql } from "@/gql/gql";
-import {  BoardContentsByDateDocument, SummaryBoardMutation, MutationSummaryBoardArgs, SummaryBoardDocument } from "@/gql/graphql";
+import {  BoardContentsByDateDocument, SummaryBoardMutation, MutationSummaryBoardArgs, SummaryBoardDocument, BoardContentsByDateQuery } from "@/gql/graphql";
 import { useGPTStore } from "@/stores/board";
 import { TypedDocumentNode, useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 
 const REALTIME = gql(`
 query BoardContentsByDate($index: String!) {
@@ -31,6 +31,7 @@ const SUMMARY_BOARD = gql(`
 
 export const ContentWrapper = () => {
   const theme = useTheme();
+  const [modifiedData, setModifiedData] = useState<BoardContentsByDateQuery>();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [pageIndex, setPageIndex] = useState<number>(0);
   const loadingRef = useRef(null);
@@ -50,6 +51,7 @@ export const ContentWrapper = () => {
       },
     });
   }
+
   useEffect(() => {
     console.log('pageIndex', pageIndex)
     if (pageIndex > 0) {
@@ -82,6 +84,7 @@ export const ContentWrapper = () => {
       { threshold: 0.5 }
     );
 
+    
     if (loadingRef.current) {
       observer.observe(loadingRef.current);
       observerRefValue = loadingRef.current;
@@ -94,6 +97,20 @@ export const ContentWrapper = () => {
     };
   }, [boardContentsQueryError, boardContentsQueryLoading]);
 
+      
+  useEffect(()=>{
+    const modifiedData = (boardContentsData?.boardContentsByDate)?.map((value) => {
+      if (value?.site === "ygosu") {
+        return { ...value, site: "YG" };
+      } else if (value?.site === "dcinside") {
+        return { ...value, site: "DC" };
+      }
+      return value;
+    });
+    console.log(modifiedData)
+    setModifiedData(modifiedData as SetStateAction<BoardContentsByDateQuery | undefined>);
+  },[boardContentsData])
+
   if (boardContentsQueryLoading) return <p>Loading...</p>;
   if (boardContentsQueryError) return <p>Error : {boardContentsQueryError.message}</p>;
   if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />
@@ -102,7 +119,7 @@ export const ContentWrapper = () => {
     <div>
       {boardContentsData?.boardContentsByDate && (
         <>
-          <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />
+          <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
           <div ref={loadingRef}></div> {/* Intersection Observer 대상으로 사용될 빈 div */}
         </>
       )}
