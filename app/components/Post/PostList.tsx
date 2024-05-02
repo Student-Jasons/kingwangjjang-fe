@@ -1,7 +1,5 @@
-import { List, ListItem  } from "@mui/material";
 import { PostCard } from "./PostCard";
 import { BoardContentsByDateQuery } from "@/app/__generated__/graphql";
-import { theme } from "@/app/styles/theme";
 
 interface Props {
   postItems: BoardContentsByDateQuery['boardContentsByDate'];

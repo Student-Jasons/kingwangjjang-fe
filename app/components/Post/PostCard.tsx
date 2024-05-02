@@ -28,17 +28,15 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
   };
 
   const handleMouseOut = () => {
-    // setIsHovering(false);
+    setIsHovering(false);
   };
 
   useEffect(() => {
-    const cardElement = null;
+    const cardElement = cardRef.current;
     if (cardElement) {
       anime({
         targets: cardElement,
-        // rotate: isHovering ? '-5deg' : '0deg', 
-        autoplay: isHovering ? true : false,
-        translateX: 250,
+        translateX: isHovering ? -50 : 0,
         duration: 300,
         easing: 'easeInOutQuad', 
       });

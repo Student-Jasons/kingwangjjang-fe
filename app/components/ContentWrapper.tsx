@@ -2,11 +2,10 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { PostList } from "@/components/Post/PostList";
 import { gql } from "@/gql/gql";
-import {  BoardContentsByDateDocument, SummaryBoardMutation, MutationSummaryBoardArgs, SummaryBoardDocument, BoardContentsByDateQuery } from "@/gql/graphql";
-import { useGPTStore } from "@/stores/board";
-import { TypedDocumentNode, useMutation, useQuery } from "@apollo/client";
+import { BoardContentsByDateDocument, SummaryBoardDocument, BoardContentsByDateQuery } from "@/gql/graphql";
+import { useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const REALTIME = gql(`
 query BoardContentsByDate($index: String!) {
@@ -42,13 +41,13 @@ export const ContentWrapper = () => {
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
   
   const handleSummaryBoard = (boardId: string, site: string) => {
-    summaryBoardMutation({
-      variables: { boardId: boardId, site: site },
-      refetchQueries: ['BoardContentsByDate'],
-      async onQueryUpdated(observableQuery) {
-          await observableQuery.refetch();
-      },
-    });
+    // summaryBoardMutation({
+    //   variables: { boardId: boardId, site: site },
+    //   refetchQueries: ['BoardContentsByDate'],
+    //   async onQueryUpdated(observableQuery) {
+    //       await observableQuery.refetch();
+    //   },
+    // });
   }
 
   useEffect(() => {
@@ -118,8 +117,8 @@ export const ContentWrapper = () => {
     <Grid container spacing={2} margin={0}
           height={isMobile ? "calc(100vh - 56px)" : "100vh"}
           position="relative" >
-      <Grid xs={0} md={3}>
-        <Box/> 
+      <Grid xs={0} md={3}> 
+        <Box sx={{ height: '100%', width: '100%', bgcolor: 'white'}} /> 
         {/* 여기에 필터두고 */}
       </Grid>
       <Grid xs={12} md={6}>
@@ -130,7 +129,7 @@ export const ContentWrapper = () => {
         )}
       </Grid>
       <Grid xs={0} md={3}>
-        <Box/>
+        <Box sx={{ height: 200, width: '100%', bgcolor: 'white'}} /> 
         {/* 여기에 실시간 두는 거 어떄? */}
       </Grid>
     </Grid>
