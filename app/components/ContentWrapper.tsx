@@ -41,7 +41,6 @@ export const ContentWrapper = () => {
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
   
-  // const filteredPosts = sites.map( (site) =>  boardContentsData?.boardContentsByDate && boardContentsData.boardContentsByDate.filter((post) => post && post.site === site ));
   const handleSummaryBoard = (boardId: string, site: string) => {
     summaryBoardMutation({
       variables: { boardId: boardId, site: site },
@@ -83,7 +82,6 @@ export const ContentWrapper = () => {
       },
       { threshold: 0.5 }
     );
-
     
     if (loadingRef.current) {
       observer.observe(loadingRef.current);
@@ -114,14 +112,14 @@ export const ContentWrapper = () => {
 
   if (boardContentsQueryLoading) return <p>Loading...</p>;
   if (boardContentsQueryError) return <p>Error : {boardContentsQueryError.message}</p>;
-  if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={boardContentsData.boardContentsByDate} />
+  if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
   
   return(
     <div>
       {boardContentsData?.boardContentsByDate && (
         <>
           <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
-          <div ref={loadingRef}></div> {/* Intersection Observer 대상으로 사용될 빈 div */}
+          <div ref={loadingRef}></div> 
         </>
       )}
     </div>
