@@ -33,7 +33,7 @@ export const TemporaryDrawer = () => {
       </List>
       <Divider />
       <List>
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} paddingX="8px">
           {filters.map((filter, index) => (
             <Chip key={index} label={filter} onClick={() => handleFilter(filter)} />
           ))}
