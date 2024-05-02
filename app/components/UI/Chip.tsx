@@ -1,17 +1,22 @@
+import { theme } from "@/app/styles/theme";
 import { Box, Typography } from "@mui/material";
 
 interface props {
     label: string
+    bgcolor: string
 }
 
-const Chip = ({label}: props) =>{
+const Chip = ({label, bgcolor}: props) =>{
     const width = `${label.length * 14}px`; 
     return (
         <Box sx={{
             width: width,
             height: 'fit-content',
             borderRadius: 1,
-            bgcolor: 'RGB(201, 201, 201)',
+            bgcolor: bgcolor,
+            '&:hover': {
+              bgcolor: 'primary.dark',
+            },
             display: 'flex', 
             alignItems: 'center',
             justifyContent: 'center',

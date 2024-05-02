@@ -12,6 +12,7 @@ import { useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { orange } from "@mui/material/colors";
 import Chip from "@/components/UI/Chip";
+import { theme } from "@/app/styles/theme";
 
 interface Props extends PostCardType {
   onClickToggle: (boardId: string, site: string) => void;
@@ -30,8 +31,8 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
     <Card sx={{ width: "100%"}} onClick={ () => handleToggle(id, site) }>
       <CardContent sx={{ display: "flex", flexDirection: "column" }}>
         <Box>
-          <Chip label={site} />
-          {isNotRealtime && <Chip label={rank}/>}
+          <Chip label={site} bgcolor={theme.chip.site} />
+          {isNotRealtime && <Chip label={rank} bgcolor={theme.chip.rank}/>}
         </Box>
         <Box
           sx={{
