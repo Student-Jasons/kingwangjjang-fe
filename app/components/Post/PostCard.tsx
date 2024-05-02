@@ -10,7 +10,6 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { orange } from "@mui/material/colors";
 import Chip from "@/components/UI/Chip";
 import { theme } from "@/app/styles/theme";
 
@@ -38,7 +37,7 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "6px 8px",
+            padding: "5px 0px",
           }}
         >
           <Tooltip title={String(createTime)} arrow>
@@ -54,11 +53,11 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "6px 8px",
+                padding: "5px 0px",
               }}
             >
               <Typography
-                variant="body1"
+                variant="body2"
                 component="div"
                 sx={{
                   whiteSpace: "pre-wrap",
