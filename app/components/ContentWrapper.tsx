@@ -32,7 +32,6 @@ const SUMMARY_BOARD = gql(`
 export const ContentWrapper = () => {
   const theme = useTheme();
   const [modifiedData, setModifiedData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
-  const [chipData, setChipData] = useState<string[]>([]);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [pageIndex, setPageIndex] = useState<number>(0);
   const loadingRef = useRef(null);
@@ -51,7 +50,7 @@ export const ContentWrapper = () => {
 
   
   const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, fetchMore} 
-  = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
+  = useQuery (BoardContentsByDateDocument, {variables: { index: "1" },});
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
   
@@ -173,51 +172,47 @@ export const ContentWrapper = () => {
   
   return(
     <>
-      {boardContentsData?.boardContentsByDate && (
-        <Grid container spacing={2} margin={0}
-              height={isMobile ? "calc(100vh - 56px)" : "100vh"}
-              position="relative" >
-          <Grid xs={0} md={3}> 
-            <Box sx={{ height: '100%', width: '100%', bgcolor: 'white'}}> 
-            {/* 여기에 필터두고 */}
-            <List>
-              <ListItem>
-                <Typography variant="body1" component="div">
-                  필터
-                </Typography>
-              </ListItem>
-            </List>
-            <List>
-              <Stack direction="row" spacing={1} paddingX="8px">
-                {filters.map((site) => (
-                  <Chip key={site} label={site} onClick={() => handleFilter(site)} />
-                ))}
-              </Stack>
-            </List>
-            </Box>
-          </Grid>
-          <Grid xs={12} md={6}>
-            <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
-          </Grid>
-          <Grid xs={0} md={3}>
-            <Box height="300px" width="100%" bgcolor="white" position="sticky" top="0" >
-            {/* 여기에 실시간 두는 거 어떄? 좋지 */}
-              <List>
-              <ListItem>
-                <Typography variant="body1" component="div">
-                  실시간 게시글
-                </Typography>
-              </ListItem>
-              </List>
-              <List>
-                <ListItem>test1</ListItem>
-                <ListItem>test2</ListItem>
-                <ListItem>test3</ListItem>
-              </List>
-            </Box>
-          </Grid>
+      <Grid container spacing={2} margin={0}
+            height={isMobile ? "calc(100vh - 56px)" : "100vh"}
+            position="relative" >
+        <Grid xs={0} md={3}> 
+          <Box position="sticky" top="0" sx={{ width: '100%', bgcolor: 'white'}}> 
+          <List>
+            <ListItem>
+              <Typography variant="body1" component="div">
+                필터
+              </Typography>
+            </ListItem>
+          </List>
+          <List>
+            <Stack direction="row" spacing={1} paddingX="8px">
+              {filters.map((site) => (
+                <Chip key={site} label={site} onClick={() => handleFilter(site)} />
+              ))}
+            </Stack>
+          </List>
+          </Box>
         </Grid>
-      )}
+        <Grid xs={12} md={6}>
+          <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
+        </Grid>
+        <Grid xs={0} md={3}>
+          <Box width="100%" bgcolor="white" position="sticky" top="0" >
+            <List>
+            <ListItem>
+              <Typography variant="body1" component="div">
+                실시간 게시글
+              </Typography>
+            </ListItem>
+            </List>
+            <List>
+              <ListItem>test1</ListItem>
+              <ListItem>test2</ListItem>
+              <ListItem>test3</ListItem>
+            </List>
+          </Box>
+        </Grid>
+      </Grid>
       {boardContentsQueryLoading && <BoardContentsQueryLoading />}
       {boardContentsQueryError && <BoardContentsQueryError />}
     </>

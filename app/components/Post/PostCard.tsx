@@ -20,7 +20,7 @@ interface Props extends PostCardType {
 
 export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, onClickToggle, }: Props) => {
   const [expanded, setExpanded] = useState(false);
-  const cardRef = useRef(null); // Ref for the card element
+  const cardRef = useRef(null); 
   const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseOver = () => {
@@ -53,20 +53,13 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
   const isNotRealtime: boolean = rank !== null;
   return (
     <Box position="relative" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-      <Card ref={cardRef} className={'mb-3'} sx={{ width: "100%", zIndex:"100", position:"relative" }} onClick={ () => handleToggle(id, site) } 
-            >
+      <Card ref={cardRef} className={'mb-3'} sx={{ width: "100%", zIndex:"100", position:"relative" }} onClick={ () => handleToggle(id, site) }>
         <CardContent sx={{transform: 'none', display: "flex", flexDirection: "column" }}>
           <Box>
             <Chip label={site} bgcolor={theme.chip.site} />
             {isNotRealtime && <Chip label={rank} bgcolor={theme.chip.rank}/>}
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "5px 0px",
-            }}
-          >
+          <Box sx={{display: "flex", justifyContent: "space-between", padding: "5px 0px",}}>
             <Tooltip title={String(createTime)} arrow>
               <Typography variant="body2" component="div">
                 {title}
