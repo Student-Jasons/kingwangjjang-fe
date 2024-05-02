@@ -52,42 +52,49 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
 
   const isNotRealtime: boolean = rank !== null;
   return (
-    <Card ref={cardRef} className={'mb-3'} sx={{ width: "100%" }} onClick={ () => handleToggle(id, site) } 
-          onMouseOver={handleMouseOver}
-          onMouseOut={handleMouseOut}>
-      <CardContent sx={{transform: 'none', display: "flex", flexDirection: "column" }}>
-        <Box>
-          <Chip label={site} bgcolor={theme.chip.site} />
-          {isNotRealtime && <Chip label={rank} bgcolor={theme.chip.rank}/>}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "5px 0px",
-          }}
-        >
-          <Tooltip title={String(createTime)} arrow>
-            <Typography variant="body2" component="div">
-              {title}
-            </Typography>
-          </Tooltip>
-        </Box>
-        <Box>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <Box sx={{ display: "flex", justifyContent: "space-between", 
-                    alignItems: "center",padding: "5px 0px",}}>
-              <Typography variant="body2" component="div"
-                sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word",}}>
-                {GPTAnswer}
+    <Box position="relative" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      <Card ref={cardRef} className={'mb-3'} sx={{ width: "100%", zIndex:"100", position:"relative" }} onClick={ () => handleToggle(id, site) } 
+            >
+        <CardContent sx={{transform: 'none', display: "flex", flexDirection: "column" }}>
+          <Box>
+            <Chip label={site} bgcolor={theme.chip.site} />
+            {isNotRealtime && <Chip label={rank} bgcolor={theme.chip.rank}/>}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "5px 0px",
+            }}
+          >
+            <Tooltip title={String(createTime)} arrow>
+              <Typography variant="body2" component="div">
+                {title}
               </Typography>
-              <Link href={url} target="_blank"passHref onClick={(e) => e.stopPropagation()}>
-                <LaunchIcon />
-              </Link>
+            </Tooltip>
+          </Box>
+          <Box>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <Box sx={{ display: "flex", justifyContent: "space-between", 
+                      alignItems: "center",padding: "5px 0px",}}>
+                <Typography variant="body2" component="div"
+                  sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word",}}>
+                  {GPTAnswer}
+                </Typography>
+              </Box>
+            </Collapse>
+          </Box>
+        </CardContent>
+      </Card>
+      <Card sx={{position:"absolute", top:"0", left:"0", bgcolor:"#3b82f6",width: "100%", height:"100%", boxShadow:"none"}}>
+        <CardContent sx={{display:"flex", justifyContent:"flex-end",width:"100%", height:"100%", padding:0, paddingBottom: 0, '&:last-child': { paddingBottom: 0 }}}>
+          <Link href={url} target="_blank"passHref onClick={(e) => e.stopPropagation()}>
+            <Box width="50px" height="100%" display="flex" alignItems="center" justifyContent="center">
+              <LaunchIcon/>
             </Box>
-          </Collapse>
-        </Box>
-      </CardContent>
-    </Card>
+          </Link>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
