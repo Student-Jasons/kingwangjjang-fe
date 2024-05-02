@@ -1,6 +1,7 @@
 import { List, ListItem  } from "@mui/material";
 import { PostCard } from "./PostCard";
 import { BoardContentsByDateQuery } from "@/app/__generated__/graphql";
+import { theme } from "@/app/styles/theme";
 
 interface Props {
   postItems: BoardContentsByDateQuery['boardContentsByDate'];
@@ -11,10 +12,9 @@ export const PostList = ({ postItems, onClickCard }: Props) => {
   return (
       <List sx={{
         width: '100%',
-        bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'auto',
-        height: '100%'
+        height: '100%',
       }}>
         { postItems && postItems.map((post, index) => (
           post &&
