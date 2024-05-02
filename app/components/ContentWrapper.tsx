@@ -1,5 +1,5 @@
 'use client'
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { PostList } from "@/components/Post/PostList";
 import { gql } from "@/gql/gql";
 import {  BoardContentsByDateDocument, SummaryBoardMutation, MutationSummaryBoardArgs, SummaryBoardDocument, BoardContentsByDateQuery } from "@/gql/graphql";
@@ -117,13 +117,22 @@ export const ContentWrapper = () => {
   return(
     <Grid container spacing={2} margin={0}
           height={isMobile ? "calc(100vh - 56px)" : "100vh"}
-          position="relative" gap="1rem">
-      {boardContentsData?.boardContentsByDate && (
-        <>
-          <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
-        </>
-      )}
-      
+          position="relative" >
+      <Grid xs={0} md={3}>
+        <Box/> 
+        {/* 여기에 필터두고 */}
+      </Grid>
+      <Grid xs={12} md={6}>
+        {boardContentsData?.boardContentsByDate && (
+          <>
+            <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
+          </>
+        )}
+      </Grid>
+      <Grid xs={0} md={3}>
+        <Box/>
+        {/* 여기에 실시간 두는 거 어떄? */}
+      </Grid>
     </Grid>
   );
 };
