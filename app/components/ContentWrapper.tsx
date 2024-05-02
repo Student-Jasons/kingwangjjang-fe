@@ -115,13 +115,15 @@ export const ContentWrapper = () => {
   if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
   
   return(
-    <div>
+    <Grid container spacing={2} margin={0}
+          height={isMobile ? "calc(100vh - 56px)" : "100vh"}
+          position="relative" gap="1rem">
       {boardContentsData?.boardContentsByDate && (
         <>
           <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
-          <div ref={loadingRef}></div> 
         </>
       )}
-    </div>
+      
+    </Grid>
   );
 };

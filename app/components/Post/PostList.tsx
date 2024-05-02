@@ -10,16 +10,12 @@ interface Props {
 
 export const PostList = ({ postItems, onClickCard }: Props) => {
   return (
-      <List sx={{
-        width: '100%',
-        position: 'relative',
-        overflow: 'auto',
-        height: '100%',
-      }}>
-        { postItems && postItems.map((post, index) => (
+    <>
+      { 
+        postItems && postItems.map((post, index) => (
           post &&
-          <ListItem key={index}>
             <PostCard
+              key={index}
               onClickToggle={onClickCard}
               id={post.boardId as string}
               rank={post.rank as string} 
@@ -28,9 +24,9 @@ export const PostList = ({ postItems, onClickCard }: Props) => {
               url={post.url as string}
               createTime={post.createTime}
               GPTAnswer={post.GPTAnswer as string}
-            ></PostCard>
-          </ListItem>
-        ))}
-      </List>
+            />
+        ))
+      }
+    </>
   );
 };

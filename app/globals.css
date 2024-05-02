@@ -20,6 +20,10 @@ body {
   background-color: whitesmoke;
 }
 
+body::-webkit-scrollbar {
+  width: 0;  
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

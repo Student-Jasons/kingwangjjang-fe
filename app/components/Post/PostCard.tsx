@@ -27,7 +27,7 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
   };
   const isNotRealtime: boolean = rank !== null
   return (
-    <Card sx={{ width: "100%"}} onClick={ () => handleToggle(id, site) }>
+    <Card sx={{ width: "100%" }} onClick={ () => handleToggle(id, site) }>
       <CardContent sx={{ display: "flex", flexDirection: "column" }}>
         <Box>
           <Chip label={site} bgcolor={theme.chip.site} />
