@@ -1,7 +1,6 @@
 'use client'
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { PostList } from "@/components/Post/PostList";
-import { gql } from "@/gql/gql";
 import { BoardContentsByDateDocument, SummaryBoardDocument, BoardContentsByDateQuery } from "@/gql/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
@@ -11,27 +10,6 @@ import { Error } from "./Error";
 import { RealtimePost } from "@/components/Post/RealtimePost";
 import { Filter } from "./Filter";
 import { FilterCollectionType } from "@/types/board-type";
-
-const REALTIME = gql(`
-query BoardContentsByDate($index: String!) {
-  boardContentsByDate(index: $index) {
-    boardId
-    site
-    rank
-    title
-    url
-    createTime
-    GPTAnswer
-}
-}`);
-
-const SUMMARY_BOARD = gql(`
-  mutation SummaryBoard($boardId: String!, $site: String!) {
-      summaryBoard(boardId: $boardId, site: $site) {
-          boardSummary
-      }
-  }
-`);
 
 export const ContentWrapper = () => {
   const theme = useTheme();
