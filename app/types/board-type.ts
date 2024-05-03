@@ -7,3 +7,7 @@ export interface PostCardType {
   createTime: Date;
   GPTAnswer: string;
 }
+
+export interface FilteredData {
+  site: (string | null | undefined)[];
+}

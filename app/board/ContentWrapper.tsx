@@ -1,14 +1,16 @@
 'use client'
-import { Box, Chip, List, ListItem, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { PostList } from "@/components/Post/PostList";
 import { gql } from "@/gql/gql";
 import { BoardContentsByDateDocument, SummaryBoardDocument, BoardContentsByDateQuery } from "@/gql/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useRef, useState } from "react";
-import { Loading } from "./loading";
+import { Loading } from "./Loading";
 import { Error } from "./Error";
 import { RealtimePost } from "@/components/Post/RealtimePost";
+import { Filter } from "./Filter";
+import { FilteredData } from "@/types/board-type";
 
 const REALTIME = gql(`
 query BoardContentsByDate($index: String!) {
@@ -37,17 +39,11 @@ export const ContentWrapper = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [pageIndex, setPageIndex] = useState<number>(0);
   const loadingRef = useRef(null);
-  const [filterItem, setFilterItem] = useState<string[]>([]);
+  const [filteredData, setFilteredData] = useState<FilteredData>();
   const filters = ["dcinside", "ygosu", "ppomppu"];
 
-  const handleFilter = (items: string | null | undefined) => {
-    if (!items) return; 
+  const handleFilter = (items: FilteredData) => {
 
-    if (filterItem.includes(items)) {
-      setFilterItem(filterItem.filter((item) => item !== items));
-    } else {
-      setFilterItem([...filterItem, items]);
-    }
   };
 
   
@@ -124,12 +120,8 @@ export const ContentWrapper = () => {
     });
 
     setModifiedData(modifiedData);
-
-    // const tempChipData = modifiedData?.map((value) => { return value?.site });
-
-    // console.log(tempChipData?.filter((element, index) => {
-    //   return tempChipData.indexOf(element) === index;
-    // }));
+    const uniqueSite = Array.from(new Set(modifiedData && modifiedData.map((item) => item?.site))); 
+    setFilteredData({ site: uniqueSite });
 
   },[boardContentsData])
 
@@ -142,24 +134,13 @@ export const ContentWrapper = () => {
             position="relative" >
         <Grid xs={0} md={3}> 
           <Box position="sticky" top="0" sx={{ width: '100%', bgcolor: 'white'}}> 
-          <List>
-            <ListItem>
-              <Typography variant="body1" color={"gray"} component="div">
-                필터
-              </Typography>
-            </ListItem>
-          </List>
-          <List>
-            <Stack direction="row" spacing={1} paddingX="8px">
-              {filters.map((site) => (
-                <Chip key={site} label={site} onClick={() => handleFilter(site)} />
-              ))}
-            </Stack>
-          </List>
+          <Filter site={filteredData?.site || []}/>
           </Box>
         </Grid>
         <Grid xs={12} md={6}>
           <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
+          {boardContentsQueryLoading && <Loading />}
+          {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
         </Grid>
         <Grid xs={0} md={3}>
           <Box width="100%" bgcolor="white" position="sticky" top="0" >
@@ -167,8 +148,6 @@ export const ContentWrapper = () => {
           </Box>
         </Grid>
       </Grid>
-      {boardContentsQueryLoading && <Loading />}
-      {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
     </>
   );
 };
