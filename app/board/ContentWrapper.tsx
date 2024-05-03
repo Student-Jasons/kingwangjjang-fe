@@ -8,6 +8,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useRef, useState } from "react";
 import { Loading } from "./loading";
 import { Error } from "./Error";
+import { RealtimePost } from "@/components/Post/RealtimePost";
 
 const REALTIME = gql(`
 query BoardContentsByDate($index: String!) {
@@ -162,18 +163,7 @@ export const ContentWrapper = () => {
         </Grid>
         <Grid xs={0} md={3}>
           <Box width="100%" bgcolor="white" position="sticky" top="0" >
-            <List>
-            <ListItem>
-              <Typography variant="body1" color={"gray"} component="div">
-                실시간 게시글
-              </Typography>
-            </ListItem>
-            </List>
-            <List>
-              <ListItem>test1</ListItem>
-              <ListItem>test2</ListItem>
-              <ListItem>test3</ListItem>
-            </List>
+            <RealtimePost/>
           </Box>
         </Grid>
       </Grid>

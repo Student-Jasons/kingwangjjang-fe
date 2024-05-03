@@ -32,5 +32,5 @@ export const Error = ({message, isMobile}: props) => {
           )}
         </Grid>
       );
-    } else return null;
+    } else return <p>에러는 발생하였으나 추적이 어렵습니다.</p>
   };
