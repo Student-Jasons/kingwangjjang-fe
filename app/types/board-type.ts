@@ -9,5 +9,5 @@ export interface PostCardType {
 }
 
 export interface FilteredData {
-  site: (string | null | undefined)[];
+  site: string[];
 }

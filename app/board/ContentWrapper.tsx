@@ -120,9 +120,8 @@ export const ContentWrapper = () => {
     });
 
     setModifiedData(modifiedData);
-    const uniqueSite = Array.from(new Set(modifiedData && modifiedData.map((item) => item?.site))); 
+    const uniqueSite = Array.from(new Set(modifiedData && modifiedData.map((item) => item?.site).filter(site => typeof site === 'string'))); 
     setFilteredData({ site: uniqueSite });
-
   },[boardContentsData])
 
   if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
