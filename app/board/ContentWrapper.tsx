@@ -6,8 +6,8 @@ import { BoardContentsByDateDocument, SummaryBoardDocument, BoardContentsByDateQ
 import { useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useRef, useState } from "react";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Loading } from "./loading";
+import { Error } from "./Error";
 
 const REALTIME = gql(`
 query BoardContentsByDate($index: String!) {
@@ -132,34 +132,6 @@ export const ContentWrapper = () => {
 
   },[boardContentsData])
 
-  const BoardContentsQueryError = () => {
-    if (boardContentsQueryError && boardContentsQueryError.message) {
-      const statusCodeMatch =
-        boardContentsQueryError.message.match(/\b\d{3}\b/);
-
-      return (
-        <Grid container direction="column" width="100%" height="100vh" top="0" left="0" 
-              spacing={2} margin="0" justifyContent="center" alignItems="center" gap="10px">
-          <Grid container direction="row" width={isMobile ? "auto" : "calc(100vh - 250px)"} 
-                alignItems="center" justifyContent="center" gap="10px">
-            <ErrorOutlineIcon color="primary" sx={{ fontSize: "80px" }} />
-            <Typography variant="h3" color="primary">
-              {statusCodeMatch}
-            </Typography>
-          </Grid>
-          {isMobile ? (
-            <></>
-          ) : (
-            <Typography variant="h6" component="div" color="gray" paragraph 
-                        width={isMobile ? "260px" : "auto"} textAlign="center">
-              {boardContentsQueryError.message}
-            </Typography>
-          )}
-        </Grid>
-      );
-    } else return null;
-  };
-
   if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
   
   return(
@@ -206,7 +178,7 @@ export const ContentWrapper = () => {
         </Grid>
       </Grid>
       {boardContentsQueryLoading && <Loading />}
-      {boardContentsQueryError && <BoardContentsQueryError />}
+      {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
     </>
   );
 };
