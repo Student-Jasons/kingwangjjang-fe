@@ -7,6 +7,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useRef, useState } from "react";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { Loading } from "./loading";
 
 const REALTIME = gql(`
 query BoardContentsByDate($index: String!) {
@@ -131,15 +132,6 @@ export const ContentWrapper = () => {
 
   },[boardContentsData])
 
-  const BoardContentsQueryLoading = () => {
-    return (
-      <Grid container direction="column" width="100%" height={isMobile ? "calc(100vh - 56px)" : "100vh"} 
-            position="absolute" top="0" left="0" spacing={2} margin="0" justifyContent="center" alignItems="center">
-        Loading...
-      </Grid>
-    );
-  };
-
   const BoardContentsQueryError = () => {
     if (boardContentsQueryError && boardContentsQueryError.message) {
       const statusCodeMatch =
@@ -213,7 +205,7 @@ export const ContentWrapper = () => {
           </Box>
         </Grid>
       </Grid>
-      {boardContentsQueryLoading && <BoardContentsQueryLoading />}
+      {boardContentsQueryLoading && <Loading />}
       {boardContentsQueryError && <BoardContentsQueryError />}
     </>
   );

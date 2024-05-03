@@ -63,7 +63,6 @@ export const Header = () => {
                 aria-expanded={open ? 'true' : undefined}
               > 
               <Avatar />
-
             </IconButton>
           </Toolbar>
         </AppBar>

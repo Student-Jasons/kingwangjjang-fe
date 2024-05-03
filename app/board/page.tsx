@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import { Header } from "@/components/Header/Header";
-import { ContentWrapper } from "@/app/components/ContentWrapper";
+import { ContentWrapper } from "./ContentWrapper";
 
 export default function Home() {
   return (
