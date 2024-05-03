@@ -179,7 +179,7 @@ export const ContentWrapper = () => {
           <Box position="sticky" top="0" sx={{ width: '100%', bgcolor: 'white'}}> 
           <List>
             <ListItem>
-              <Typography variant="body1" component="div">
+              <Typography variant="body1" color={"gray"} component="div">
                 필터
               </Typography>
             </ListItem>
@@ -200,7 +200,7 @@ export const ContentWrapper = () => {
           <Box width="100%" bgcolor="white" position="sticky" top="0" >
             <List>
             <ListItem>
-              <Typography variant="body1" component="div">
+              <Typography variant="body1" color={"gray"} component="div">
                 실시간 게시글
               </Typography>
             </ListItem>
