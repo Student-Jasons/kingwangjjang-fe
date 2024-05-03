@@ -79,15 +79,13 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
           </Box>
         </CardContent>
       </Card>
-      <Card sx={{position:"absolute", top:"0", left:"0", bgcolor:"#3b82f6",width: "100%", height:"100%", boxShadow:"none"}}>
-        <CardContent sx={{display:"flex", justifyContent:"flex-end",width:"100%", height:"100%", padding:0, paddingBottom: 0, '&:last-child': { paddingBottom: 0 }}}>
-          <Link href={url} target="_blank"passHref onClick={(e) => e.stopPropagation()}>
-            <Box width="50px" height="100%" display="flex" alignItems="center" justifyContent="center">
-              <LaunchIcon/>
-            </Box>
-          </Link>
-        </CardContent>
-      </Card>
+      <Box sx={{position:"absolute", top:"0", borderRadius:"5px", left:"0", bgcolor:"#3b82f6",width: "100%", height:"100%", boxShadow:"none"}}>
+        <Link href={url} target="_blank" passHref onClick={(e) => e.stopPropagation()}>
+          <Box width="100%" height="100%" display="flex" alignItems="center" justifyContent="center">
+            <LaunchIcon sx={{width:"50px", justifyContent:"end" }}/>
+          </Box>
+        </Link>
+      </Box>
     </Box>
   );
 };
