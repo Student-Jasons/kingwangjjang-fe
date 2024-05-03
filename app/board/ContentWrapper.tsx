@@ -52,7 +52,7 @@ export const ContentWrapper = () => {
 
   
   const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, fetchMore} 
-  = useQuery (BoardContentsByDateDocument, {variables: { index: "1" },});
+  = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
   

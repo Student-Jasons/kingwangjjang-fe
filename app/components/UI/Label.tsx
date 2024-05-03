@@ -6,7 +6,7 @@ interface props {
     bgcolor: string
 }
 
-const Chip = ({label, bgcolor}: props) =>{
+const Label = ({label, bgcolor}: props) =>{
     const width = `${label.length * 14}px`; 
     return (
         <Box sx={{
@@ -28,4 +28,4 @@ const Chip = ({label, bgcolor}: props) =>{
     )
 }
 
-export default Chip
+export default Label

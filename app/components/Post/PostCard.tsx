@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
-import Chip from "@/components/UI/Chip";
+import Label from "@/app/components/UI/Label";
 import { theme } from "@/app/styles/theme";
 import anime from 'animejs/lib/anime.es.js';
 
@@ -56,8 +56,8 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
       <Card ref={cardRef} className={'mb-3'} sx={{ width: "100%", zIndex:"100", position:"relative" }} onClick={ () => handleToggle(id, site) }>
         <CardContent sx={{transform: 'none', display: "flex", flexDirection: "column" }}>
           <Box>
-            <Chip label={site} bgcolor={theme.chip.site} />
-            {isNotRealtime && <Chip label={rank} bgcolor={theme.chip.rank}/>}
+            <Label label={site} bgcolor={theme.chip.site} />
+            {isNotRealtime && <Label label={rank} bgcolor={theme.chip.rank}/>}
           </Box>
           <Box sx={{display: "flex", justifyContent: "space-between", padding: "5px 0px",}}>
             <Tooltip title={String(createTime)} arrow>
