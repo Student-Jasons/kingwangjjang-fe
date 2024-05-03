@@ -5,12 +5,12 @@ import { gql } from "@/gql/gql";
 import { BoardContentsByDateDocument, SummaryBoardDocument, BoardContentsByDateQuery } from "@/gql/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { Loading } from "./Loading";
 import { Error } from "./Error";
 import { RealtimePost } from "@/components/Post/RealtimePost";
 import { Filter } from "./Filter";
-import { FilteredData } from "@/types/board-type";
+import { FilterCollectionType } from "@/types/board-type";
 
 const REALTIME = gql(`
 query BoardContentsByDate($index: String!) {
@@ -39,11 +39,9 @@ export const ContentWrapper = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [pageIndex, setPageIndex] = useState<number>(0);
   const loadingRef = useRef(null);
-  const [filteredData, setFilteredData] = useState<FilteredData>();
-  const filters = ["dcinside", "ygosu", "ppomppu"];
+  const [filterCollection, setFilterCollection] = useState<FilterCollectionType>();
 
-  const handleFilter = (items: FilteredData) => {
-
+  const handleFilter = (items: FilterCollectionType) => {
   };
 
   
@@ -70,7 +68,7 @@ export const ContentWrapper = () => {
           index: (pageIndex).toString()
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult) return previousResult; // Return previous result if no new data
+          if (!fetchMoreResult) return previousResult; 
           return {
             boardContentsByDate: [
               ...(previousResult.boardContentsByDate || []),
@@ -120,8 +118,9 @@ export const ContentWrapper = () => {
     });
 
     setModifiedData(modifiedData);
+    
     const uniqueSite = Array.from(new Set(modifiedData && modifiedData.map((item) => item?.site).filter(site => typeof site === 'string'))); 
-    setFilteredData({ site: uniqueSite });
+    setFilterCollection({ site: uniqueSite });
   },[boardContentsData])
 
   if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
@@ -132,8 +131,9 @@ export const ContentWrapper = () => {
             height={isMobile ? "calc(100vh - 56px)" : "100vh"}
             position="relative" >
         <Grid xs={0} md={3}> 
-          <Box position="sticky" top="0" sx={{ width: '100%', bgcolor: 'white'}}> 
-          <Filter site={filteredData?.site || []}/>
+          {/* 왼쪽 Side */}
+          <Box width="100%" bgcolor="white" position="sticky" top="0" >
+          <Filter filteredData={filterCollection} setFilterCollection={setFilterCollection} />
           </Box>
         </Grid>
         <Grid xs={12} md={6}>
@@ -143,6 +143,7 @@ export const ContentWrapper = () => {
         </Grid>
         <Grid xs={0} md={3}>
           <Box width="100%" bgcolor="white" position="sticky" top="0" >
+            {/* 오른쪽 Side */}
             <RealtimePost/>
           </Box>
         </Grid>

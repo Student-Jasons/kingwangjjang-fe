@@ -1,9 +1,14 @@
 import { Chip, List, ListItem, Stack, Typography } from '@mui/material'
-import React from 'react'
-import { FilteredData } from '@/types/board-type'
+import React, { Dispatch, SetStateAction } from 'react'
+import { FilterCollectionType } from '@/types/board-type'
 import { FilterChip } from '@/components/UI/FilterChip'
 
-export const Filter = (filteredData: FilteredData) => {
+interface props {
+    filteredData: FilterCollectionType | undefined
+    setFilterCollection: Dispatch<SetStateAction<FilterCollectionType | undefined>>
+}
+
+export const Filter = ({filteredData, setFilterCollection}: props) => {
     return (
         <>
         <List>
@@ -14,9 +19,8 @@ export const Filter = (filteredData: FilteredData) => {
             </ListItem>
         </List><List>
             <Stack direction="row" spacing={1} paddingX="8px">
-            {filteredData.site.map((site, index) => (
-                <FilterChip key={index} label={site}/> 
-                //  onClick={() => handleFilter(site)} />
+            {filteredData && filteredData.site.map((site, index) => (
+                <FilterChip setFilterCollection={setFilterCollection} key={index} label={site}/> 
                 ))}
             </Stack>
         </List>

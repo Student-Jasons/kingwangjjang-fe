@@ -8,6 +8,6 @@ export interface PostCardType {
   GPTAnswer: string;
 }
 
-export interface FilteredData {
+export interface FilterCollectionType {
   site: string[];
 }
