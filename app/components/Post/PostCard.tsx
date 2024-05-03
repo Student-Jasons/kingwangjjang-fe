@@ -67,7 +67,7 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
             </Tooltip>
           </Box>
           <Box>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Collapse in={expanded} timeout="auto" > {/*unmountOnExit*/}
               <Box sx={{ display: "flex", justifyContent: "space-between", 
                       alignItems: "center",padding: "5px 0px",}}>
                 <Typography variant="body2" component="div"
