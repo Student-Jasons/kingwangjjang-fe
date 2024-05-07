@@ -21,7 +21,6 @@ export const ContentWrapper = () => {
 
   const handleFilter = (items: FilterCollectionType) => {
   };
-
   
   const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, fetchMore} 
   = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
@@ -64,10 +63,9 @@ export const ContentWrapper = () => {
       ([entry]) => {
         if (entry.isIntersecting && !boardContentsQueryLoading && !boardContentsQueryError) {
           setPageIndex(prevPageIndex => prevPageIndex + 1); 
-          console.log(pageIndex)
         }
       },
-      { threshold: 0.5 }
+      { threshold: 1 }
     );
     
     if (loadingRef.current) {
@@ -125,6 +123,7 @@ export const ContentWrapper = () => {
           <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
           {boardContentsQueryLoading && <Loading />}
           {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
+          <div ref={loadingRef}/> {/* Pagination Ref 페이지 최하단에 있어야함 */}
         </Grid>
         <Grid xs={0} md={3}>
           <Box width="100%" bgcolor="white" position="sticky" top="0" >
