@@ -12,9 +12,9 @@ import { Filter } from "./Filter";
 import { FilterCollectionType } from "@/types/board-type";
 
 export const ContentWrapper = () => {
-  const theme = useTheme();
+  const pageTheme = useTheme();
   const [modifiedData, setModifiedData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(pageTheme.breakpoints.down("sm"));
   const [pageIndex, setPageIndex] = useState<number>(0);
   const loadingRef = useRef(null);
   const [filterCollection, setFilterCollection] = useState<FilterCollectionType>();
@@ -112,12 +112,11 @@ export const ContentWrapper = () => {
   
   return(
     <>
-      <Grid container spacing={2} margin={0}
-            height={isMobile ? "calc(100vh - 56px)" : "100vh"}
+      <Grid container spacing={2} margin={0} paddingY="0"
             position="relative" >
-        <Grid xs={0} md={3}> 
+        <Grid xs={0} md={3} paddingY="0" > 
           {/* 왼쪽 Side */}
-          <Box width="100%" bgcolor="white" position="sticky" top="0" >
+          <Box width="100%" bgcolor="white" position="sticky" top="73px" >
           <Filter filteredData={filterCollection} setFilterCollection={setFilterCollection} />
           </Box>
         </Grid>
@@ -126,8 +125,8 @@ export const ContentWrapper = () => {
           {boardContentsQueryLoading && <Loading />}
           {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
         </Grid>
-        <Grid xs={0} md={3}>
-          <Box width="100%" bgcolor="white" position="sticky" top="0" >
+        <Grid xs={0} md={3} paddingY="0" >
+          <Box width="100%" bgcolor="white" position="sticky" top="73px" >
             {/* 오른쪽 Side */}
             <RealtimePost/>
           </Box>
