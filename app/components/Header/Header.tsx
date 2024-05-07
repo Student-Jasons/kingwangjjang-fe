@@ -20,8 +20,8 @@ import React, { useState } from "react";
 import { AccountMenu } from "./MyPage/AccountMenu";
 
 export const Header = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const pageTheme = useTheme();
+  const isMobile = useMediaQuery(pageTheme.breakpoints.down("sm"));
   const [filterOpen, setFilterOpen] = useState(false);
   const trigger = useScrollTrigger();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -39,11 +39,9 @@ export const Header = () => {
   };
 
   return (
-    <Box height={isMobile ? "57px" : "65px"} marginBottom={isMobile ? "8px" : "0"}>
-      <Slide appear={false} direction="down" in={!trigger}>
+    <Box height={isMobile ? "56px" : "64px"} marginBottom={isMobile ? "8px" : "0"} >
         <AppBar component="nav" color="default"
-          sx={{
-            borderBottom: "1px solid #e0e0e0",}}>
+          sx={{ borderBottom: "1px solid #e0e0e0" }}>
           <Toolbar>
             <Typography
               variant="h6"
@@ -66,7 +64,6 @@ export const Header = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
-      </Slide>
 
       {/* Filter Drawer */}
       {isMobile ? 
