@@ -3,13 +3,16 @@
 import {
   AppBar,
   Avatar,
+  Box,
   Drawer,
   IconButton,
   Link,
   Slide,
   Toolbar,
   Typography,
+  useMediaQuery,
   useScrollTrigger,
+  useTheme,
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TemporaryDrawer } from "@/components/Drawer/TemporaryDrawer";
@@ -17,6 +20,8 @@ import React, { useState } from "react";
 import { AccountMenu } from "./MyPage/AccountMenu";
 
 export const Header = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [filterOpen, setFilterOpen] = useState(false);
   const trigger = useScrollTrigger();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -34,7 +39,7 @@ export const Header = () => {
   };
 
   return (
-    <>
+    <Box height={isMobile ? "57px" : "65px"} marginBottom={isMobile ? "8px" : "0"}>
       <Slide appear={false} direction="down" in={!trigger}>
         <AppBar component="nav" color="default"
           sx={{
@@ -46,9 +51,11 @@ export const Header = () => {
             >
               Hello, 
             </Typography>
-            <IconButton onClick={handleFilterOpen}>
-              <FilterAltIcon />
-            </IconButton>
+            {isMobile ? (
+              <IconButton onClick={handleFilterOpen}>
+                <FilterAltIcon />
+              </IconButton>
+            ) : null}
             <IconButton
                 onClick={handleMenuClick}
                 aria-controls={open ? 'account-menu' : undefined}
@@ -56,19 +63,20 @@ export const Header = () => {
                 aria-expanded={open ? 'true' : undefined}
               > 
               <Avatar />
-
             </IconButton>
           </Toolbar>
         </AppBar>
       </Slide>
 
       {/* Filter Drawer */}
+      {isMobile ? 
       <Drawer open={filterOpen} onClose={() => setFilterOpen(false)} anchor="right">
         <TemporaryDrawer />
       </Drawer>
+      : null}
 
       {/* Avata Menu */}
       <AccountMenu anchorEl={anchorEl} open={open} handleClose={handleMenuClose} />
-    </>
+    </Box>
   );
 };
