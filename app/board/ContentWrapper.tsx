@@ -10,79 +10,32 @@ import { Error } from "./Error";
 import { RealtimePost } from "@/components/Post/RealtimePost";
 import { Filter } from "./Filter";
 import { FilterCollectionType } from "@/types/board-type";
+import useInfiniteScrollablePostList from "../hooks/useInfiniteScrollablePostList";
 
 export const ContentWrapper = () => {
   const theme = useTheme();
-  const [modifiedData, setModifiedData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
+  const [postData, setPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [pageIndex, setPageIndex] = useState<number>(0);
-  const loadingRef = useRef(null);
   const [filterCollection, setFilterCollection] = useState<FilterCollectionType>();
+  const {loadingRef, loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData} 
+  = useInfiniteScrollablePostList();
 
   const handleFilter = (items: FilterCollectionType) => {
   };
-
   
-  const { loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData, fetchMore} 
-  = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
   
   const handleSummaryBoard = (boardId: string, site: string) => {
-    // summaryBoardMutation({
-    //   variables: { boardId: boardId, site: site },
-    //   refetchQueries: ['BoardContentsByDate'],
-    //   async onQueryUpdated(observableQuery) {
-    //       await observableQuery.refetch();
-    //   },
-    // });
+    summaryBoardMutation({
+      variables: { boardId: boardId, site: site },
+      refetchQueries: ['BoardContentsByDate'],
+      async onQueryUpdated(observableQuery) {
+          await observableQuery.refetch();
+      },
+    });
   }
 
-  useEffect(() => {
-    console.log('pageIndex', pageIndex)
-    if (pageIndex > 0) {
-      fetchMore({
-        variables: {
-          index: (pageIndex).toString()
-        },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult) return previousResult; 
-          return {
-            boardContentsByDate: [
-              ...(previousResult.boardContentsByDate || []),
-              ...(fetchMoreResult.boardContentsByDate || [])
-            ]
-          };
-        },
-      })
-    }
-  }, [pageIndex])
-
-  useEffect(() => {
-    let observerRefValue: any = null;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !boardContentsQueryLoading && !boardContentsQueryError) {
-          setPageIndex(prevPageIndex => prevPageIndex + 1); 
-          console.log(pageIndex)
-        }
-      },
-      { threshold: 0.5 }
-    );
-    
-    if (loadingRef.current) {
-      observer.observe(loadingRef.current);
-      observerRefValue = loadingRef.current;
-    }
-
-    return () => {
-        if (observerRefValue) {
-          observer.unobserve(observerRefValue);
-        }
-    };
-  }, [boardContentsQueryError, boardContentsQueryLoading]);
-
-      
   useEffect(()=>{
     const modifiedData = (boardContentsData?.boardContentsByDate)?.map((value) => {
       if (value?.site === "ygosu") {
@@ -95,7 +48,7 @@ export const ContentWrapper = () => {
       return value;
     });
 
-    setModifiedData(modifiedData);
+    setPostData(modifiedData);
     
     const uniqueSite = Array.from(new Set(
       modifiedData
@@ -108,7 +61,7 @@ export const ContentWrapper = () => {
     }
   },[boardContentsData])
 
-  if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
+  if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={postData} />
   
   return(
     <>
@@ -122,13 +75,14 @@ export const ContentWrapper = () => {
           </Box>
         </Grid>
         <Grid xs={12} md={6}>
-          <PostList onClickCard={handleSummaryBoard} postItems={modifiedData} />
+          <PostList onClickCard={handleSummaryBoard} postItems={postData} />
           {boardContentsQueryLoading && <Loading />}
           {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
+          <div ref={loadingRef}/> {/* Pagination Ref 페이지 최하단에 있어야함 */}
         </Grid>
         <Grid xs={0} md={3}>
+          {/* 오른쪽 Side */}
           <Box width="100%" bgcolor="white" position="sticky" top="0" >
-            {/* 오른쪽 Side */}
             <RealtimePost/>
           </Box>
         </Grid>
