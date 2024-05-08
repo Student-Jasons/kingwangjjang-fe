@@ -20,9 +20,6 @@ export const ContentWrapper = () => {
   const {loadingRef, loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData} 
   = useInfiniteScrollablePostList();
 
-  const handleFilter = (items: FilterCollectionType) => {
-  };
-  
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
   
@@ -70,13 +67,14 @@ export const ContentWrapper = () => {
       <Grid xs={0} md={3} paddingY="0" > 
         {/* 왼쪽 Side */}
         <Box width="100%" bgcolor="white" position="sticky" top="73px" >
-        <Filter filteredData={filterCollection} setFilterCollection={setFilterCollection} />
+          <Filter setPostData={setPostData} filteredData={filterCollection} />
         </Box>
       </Grid>
       <Grid xs={12} md={6}>
         <PostList onClickCard={handleSummaryBoard} postItems={postData} />
         {boardContentsQueryLoading && <Loading />}
         {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
+        <div ref={loadingRef}/>
       </Grid>
       <Grid xs={0} md={3} paddingY="0" >
         {/* 오른쪽 Side */}
