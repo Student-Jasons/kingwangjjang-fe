@@ -6,10 +6,11 @@ import { BoardContentsByDateQuery } from '@/app/__generated__/graphql'
 
 interface props {
     filteredData: FilterCollectionType | undefined // 처음 List를 받아왔을 때 생성되는 FilterCollection 수정하면 안됨
-    setPostData: Dispatch<SetStateAction<BoardContentsByDateQuery['boardContentsByDate']>>
+    postData: BoardContentsByDateQuery['boardContentsByDate']
+    setFilteredPostData: Dispatch<SetStateAction<BoardContentsByDateQuery['boardContentsByDate']>>
 }
 
-export const Filter = ({filteredData, setPostData}: props) => {
+export const Filter = ({filteredData, setFilteredPostData, postData}: props) => {
     const [filterItems, setFilterItems] = useState<string[]>([]) // Chip과 연동되어 있어서 여기에 존재하는 것만 List에 띄어야함
     const handleFilter = (item: string) => {
         if (filterItems.includes(item)) {
@@ -19,6 +20,11 @@ export const Filter = ({filteredData, setPostData}: props) => {
         }
       };
     useEffect(() => { filteredData?.site && setFilterItems(filteredData?.site) }, [filteredData]);
+    useEffect(() => {
+        const filteredPosts = postData && postData.filter(post => post?.site && filterItems.includes(post.site));
+        
+        setFilteredPostData(filteredPosts);
+     }, [filterItems, postData, setFilteredPostData]);
 
     return (
         <>

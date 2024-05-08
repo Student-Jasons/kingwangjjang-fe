@@ -15,6 +15,7 @@ import useInfiniteScrollablePostList from "../hooks/useInfiniteScrollablePostLis
 export const ContentWrapper = () => {
   const pageTheme = useTheme();
   const [postData, setPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
+  const [fiteredPostData, setFiteredPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
   const isMobile = useMediaQuery(pageTheme.breakpoints.down("sm"));
   const [filterCollection, setFilterCollection] = useState<FilterCollectionType>();
   const {loadingRef, loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData} 
@@ -34,6 +35,7 @@ export const ContentWrapper = () => {
   }
 
   useEffect(()=>{
+    // Site이름을 영어 -> 한글
     const modifiedData = (boardContentsData?.boardContentsByDate)?.map((value) => {
       if (value?.site === "ygosu") {
         return { ...value, site: "와이고수" };
@@ -46,7 +48,8 @@ export const ContentWrapper = () => {
     });
 
     setPostData(modifiedData);
-    
+    setFiteredPostData(modifiedData);
+
     const uniqueSite = Array.from(new Set(
       modifiedData
         ? modifiedData.map((item) => item?.site).filter(site => typeof site === 'string').map(String)
@@ -67,11 +70,11 @@ export const ContentWrapper = () => {
       <Grid xs={0} md={3} paddingY="0" > 
         {/* 왼쪽 Side */}
         <Box width="100%" bgcolor="white" position="sticky" top="73px" >
-          <Filter setPostData={setPostData} filteredData={filterCollection} />
+          <Filter setFilteredPostData={setFiteredPostData} postData={postData} filteredData={filterCollection} />
         </Box>
       </Grid>
       <Grid xs={12} md={6}>
-        <PostList onClickCard={handleSummaryBoard} postItems={postData} />
+        <PostList onClickCard={handleSummaryBoard} postItems={fiteredPostData} />
         {boardContentsQueryLoading && <Loading />}
         {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
         <div ref={loadingRef}/>
