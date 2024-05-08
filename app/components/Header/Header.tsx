@@ -64,6 +64,7 @@ export const Header = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
+        <Toolbar/>
 
       {/* Filter Drawer */}
       {isMobile ? 

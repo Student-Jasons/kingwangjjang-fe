@@ -65,27 +65,26 @@ export const ContentWrapper = () => {
   
   return(
     <>
-      <Grid container spacing={2} margin={0} paddingY="0"
-            position="relative" >
-        <Grid xs={0} md={3} paddingY="0" > 
-          {/* 왼쪽 Side */}
-          <Box width="100%" bgcolor="white" position="sticky" top="73px" >
-          <Filter filteredData={filterCollection} setFilterCollection={setFilterCollection} />
-          </Box>
-        </Grid>
-        <Grid xs={12} md={6}>
-          <PostList onClickCard={handleSummaryBoard} postItems={postData} />
-          {boardContentsQueryLoading && <Loading />}
-          {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
-          <div ref={loadingRef}/> {/* Pagination Ref 페이지 최하단에 있어야함 */}
-        </Grid>
-        <Grid xs={0} md={3}>
-          {/* 오른쪽 Side */}
-          <Box width="100%" bgcolor="white" position="sticky" top="0" >
-            <RealtimePost/>
-          </Box>
-        </Grid>
+    <Grid container spacing={2} margin={0} paddingY="0"
+          position="relative" >
+      <Grid xs={0} md={3} paddingY="0" > 
+        {/* 왼쪽 Side */}
+        <Box width="100%" bgcolor="white" position="sticky" top="73px" >
+        <Filter filteredData={filterCollection} setFilterCollection={setFilterCollection} />
+        </Box>
       </Grid>
-    </>
+      <Grid xs={12} md={6}>
+        <PostList onClickCard={handleSummaryBoard} postItems={postData} />
+        {boardContentsQueryLoading && <Loading />}
+        {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
+      </Grid>
+      <Grid xs={0} md={3} paddingY="0" >
+        {/* 오른쪽 Side */}
+        <Box width="100%" bgcolor="white" position="sticky" top="73px" >
+          <RealtimePost/>
+        </Box>
+      </Grid>
+    </Grid>
+   </>
   );
 };
