@@ -14,10 +14,10 @@ import useInfiniteScrollablePostList from "../hooks/useInfiniteScrollablePostLis
 
 export const ContentWrapper = () => {
   const pageTheme = useTheme();
-  // const [postData, setPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
+  const [postData, setPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
   const [fiteredPostData, setFiteredPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
-  const isMobile = useMediaQuery(pageTheme.breakpoints.down("sm"));
-  // const [filterCollection, setFilterCollection] = useState<FilterCollectionType>();
+  const isMobile = useMediaQuery(pageTheme.breakpoints.down("xs"));
+  const [filterCollection, setFilterCollection] = useState<FilterCollectionType>();
   const {loadingRef, loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData} 
   = useInfiniteScrollablePostList();
 
@@ -47,21 +47,21 @@ export const ContentWrapper = () => {
       return value;
     });
 
-    // setPostData(modifiedData);
+    setPostData(modifiedData);
     setFiteredPostData(modifiedData);
 
-    // const uniqueSite = Array.from(new Set(
-    //   modifiedData
-    //     ? modifiedData.map((item) => item?.site).filter(site => typeof site === 'string').map(String)
-    //     : []
-    // )); 
+    const uniqueSite = Array.from(new Set(
+      modifiedData
+        ? modifiedData.map((item) => item?.site).filter(site => typeof site === 'string').map(String)
+        : []
+    )); 
     
-    // if (uniqueSite !== undefined) {
-    //   setFilterCollection({ site: uniqueSite });
-    // }
+    if (uniqueSite !== undefined) {
+      setFilterCollection({ site: uniqueSite });
+    }
   },[boardContentsData])
 
-  if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={fiteredPostData} />
+  if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={postData} />
   
   return(
     <>
@@ -70,7 +70,7 @@ export const ContentWrapper = () => {
       <Grid xs={0} md={3} paddingY="0" > 
         {/* 왼쪽 Side */}
         <Box width="100%" bgcolor="white" position="sticky" top="73px" >
-          {/* <Filter setFilteredPostData={setFiteredPostData} postData={postData} filteredData={filterCollection} /> */}
+          <Filter setFilteredPostData={setFiteredPostData} postData={postData} filteredData={filterCollection} />
         </Box>
       </Grid>
       <Grid xs={12} md={6}>

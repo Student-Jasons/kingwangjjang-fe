@@ -95,7 +95,7 @@ export type SummaryBoardMutationVariables = Exact<{
 }>;
 
 
-// export type SummaryBoardMutation = { __typename?: 'Mutation', summaryBoard?: { __typename?: 'SummaryBoardMutation', boardSummary?: string | null } | null };
+export type SummaryBoardMutation = { __typename?: 'Mutation', summaryBoard?: { __typename?: 'SummaryBoardMutation', boardSummary?: string | null } | null };
 
 
 export const BoardContentsByDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BoardContentsByDate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"index"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardContentsByDate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"index"},"value":{"kind":"Variable","name":{"kind":"Name","value":"index"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"rank"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"createTime"}},{"kind":"Field","name":{"kind":"Name","value":"GPTAnswer"}}]}}]}}]} as unknown as DocumentNode<BoardContentsByDateQuery, BoardContentsByDateQueryVariables>;
