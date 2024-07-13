@@ -23,8 +23,8 @@ export default function Login() {
       [name]: value,
     }));
   };
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const pageTheme = useTheme();
+  const isMobile = useMediaQuery(pageTheme.breakpoints.down("sm"));
 
   return (
     <Container

@@ -6,6 +6,8 @@ import {
   Collapse,
   Tooltip,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -22,13 +24,19 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
   const [expanded, setExpanded] = useState(false);
   const cardRef = useRef(null); 
   const [isHovering, setIsHovering] = useState(false);
+  const pageTheme = useTheme();
+  const isMobile = useMediaQuery(pageTheme.breakpoints.down("sm"));
 
   const handleMouseOver = () => {
-    setIsHovering(true);
+    if(!isMobile){
+      setIsHovering(true);
+    }
   };
 
   const handleMouseOut = () => {
-    setIsHovering(false);
+    if(!isMobile){
+      setIsHovering(false);
+    }
   };
 
   useEffect(() => {
@@ -59,12 +67,18 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
             <Label label={site} bgcolor={theme.chip.site} />
             {isNotRealtime && <Label label={rank} bgcolor={theme.chip.rank}/>}
           </Box>
-          <Box sx={{display: "flex", justifyContent: "space-between", padding: "5px 0px",}}>
+          <Box sx={{display: "flex", justifyContent: "space-between", padding: "5px 0px", gap: "5px"}}>
             <Tooltip title={String(createTime)} arrow>
               <Typography variant="body2" component="div">
                 {title}
               </Typography>
+              
             </Tooltip>
+            {isMobile && 
+              <Link href={url} target="_blank"passHref onClick={(e) => e.stopPropagation()}>
+                <LaunchIcon />
+              </Link>
+              }
           </Box>
           <Box>
             <Collapse in={expanded} timeout="auto" > {/*unmountOnExit*/}
@@ -82,7 +96,7 @@ export const PostCard = ({ id, site, title, url, createTime, GPTAnswer, rank, on
       <Box sx={{position:"absolute", top:"0", borderRadius:"5px", left:"0", bgcolor:"#3b82f6",width: "100%", height:"100%", boxShadow:"none"}}>
         <Link href={url} target="_blank" passHref onClick={(e) => e.stopPropagation()}>
           <Box width="100%" height="100%" display="flex" alignItems="center" justifyContent="end">
-            <LaunchIcon sx={{width:"50px"}}/>
+            <LaunchIcon sx={{width:"50px", color:"white"}}/>
           </Box>
         </Link>
       </Box>

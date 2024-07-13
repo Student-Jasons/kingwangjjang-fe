@@ -13,16 +13,14 @@ import { FilterCollectionType } from "@/types/board-type";
 import useInfiniteScrollablePostList from "../hooks/useInfiniteScrollablePostList";
 
 export const ContentWrapper = () => {
-  const theme = useTheme();
+  const pageTheme = useTheme();
   const [postData, setPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [fiteredPostData, setFiteredPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
+  const isMobile = useMediaQuery(pageTheme.breakpoints.down("xs"));
   const [filterCollection, setFilterCollection] = useState<FilterCollectionType>();
   const {loadingRef, loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData} 
   = useInfiniteScrollablePostList();
 
-  const handleFilter = (items: FilterCollectionType) => {
-  };
-  
   const [ summaryBoardMutation, { data: summaryBoardMutationData, loading: summaryBoardMutationLoading, error: summaryBoardMutationError,},]
   = useMutation(SummaryBoardDocument, { refetchQueries: ["BoardContentsByDate"] });
   
@@ -37,6 +35,7 @@ export const ContentWrapper = () => {
   }
 
   useEffect(()=>{
+    // Site이름을 영어 -> 한글
     const modifiedData = (boardContentsData?.boardContentsByDate)?.map((value) => {
       if (value?.site === "ygosu") {
         return { ...value, site: "와이고수" };
@@ -49,7 +48,8 @@ export const ContentWrapper = () => {
     });
 
     setPostData(modifiedData);
-    
+    setFiteredPostData(modifiedData);
+
     const uniqueSite = Array.from(new Set(
       modifiedData
         ? modifiedData.map((item) => item?.site).filter(site => typeof site === 'string').map(String)
@@ -65,28 +65,27 @@ export const ContentWrapper = () => {
   
   return(
     <>
-      <Grid container spacing={2} margin={0}
-            height={isMobile ? "calc(100vh - 56px)" : "100vh"}
-            position="relative" >
-        <Grid xs={0} md={3}> 
-          {/* 왼쪽 Side */}
-          <Box width="100%" bgcolor="white" position="sticky" top="0" >
-          <Filter filteredData={filterCollection} setFilterCollection={setFilterCollection} />
-          </Box>
-        </Grid>
-        <Grid xs={12} md={6}>
-          <PostList onClickCard={handleSummaryBoard} postItems={postData} />
-          {boardContentsQueryLoading && <Loading />}
-          {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
-          <div ref={loadingRef}/> {/* Pagination Ref 페이지 최하단에 있어야함 */}
-        </Grid>
-        <Grid xs={0} md={3}>
-          {/* 오른쪽 Side */}
-          <Box width="100%" bgcolor="white" position="sticky" top="0" >
-            <RealtimePost/>
-          </Box>
-        </Grid>
+    <Grid container spacing={2} margin={0} paddingY="0"
+          position="relative" >
+      <Grid xs={0} md={3} paddingY="0" > 
+        {/* 왼쪽 Side */}
+        <Box width="100%" bgcolor="white" position="sticky" top="73px" >
+          <Filter setFilteredPostData={setFiteredPostData} postData={postData} filteredData={filterCollection} />
+        </Box>
       </Grid>
-    </>
+      <Grid xs={12} md={6}>
+        <PostList onClickCard={handleSummaryBoard} postItems={fiteredPostData} />
+        {boardContentsQueryLoading && <Loading />}
+        {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
+        <div ref={loadingRef}/>
+      </Grid>
+      <Grid xs={0} md={3} paddingY="0" >
+        {/* 오른쪽 Side */}
+        <Box width="100%" bgcolor="white" position="sticky" top="73px" >
+          <RealtimePost/>
+        </Box>
+      </Grid>
+    </Grid>
+   </>
   );
 };
