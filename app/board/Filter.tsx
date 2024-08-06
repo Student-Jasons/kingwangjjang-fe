@@ -5,8 +5,8 @@ import { FilterChip } from '@/components/UI/FilterChip'
 import {RealtimePaginationQuery } from "@/gql/graphql";
 interface props {
     filteredData: FilterCollectionType | undefined // 처음 List를 받아왔을 때 생성되는 FilterCollection 수정하면 안됨
-    postData: RealtimePaginationQuery['realtimePagination']
-    setFilteredPostData: Dispatch<SetStateAction<RealtimePaginationQuery['realtimePagination']>>
+    postData: RealtimePaginationQuery['realtimePagination']| undefined
+    setFilteredPostData: Dispatch<SetStateAction<(RealtimePaginationQuery['realtimePagination'] | undefined)>>
 }
 
 export const Filter = ({filteredData, setFilteredPostData, postData}: props) => {

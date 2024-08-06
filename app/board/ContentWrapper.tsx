@@ -70,7 +70,7 @@ export const ContentWrapper = () => {
       <Grid xs={0} md={3} paddingY="0" > 
         {/* 왼쪽 Side */}
         <Box width="100%" bgcolor="white" position="sticky" top="73px" >
-          {/* <Filter setFilteredPostData={setFiteredPostData} postData={postData} filteredData={filterCollection} /> */}
+          <Filter setFilteredPostData={setFiteredPostData} postData={postData} filteredData={filterCollection} />
         </Box>
       </Grid>
       <Grid xs={12} md={6}>
