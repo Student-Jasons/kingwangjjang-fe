@@ -1,7 +1,7 @@
 'use client'
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { PostList } from "@/components/Post/PostList";
-import { BoardContentsByDateDocument, SummaryBoardDocument, BoardContentsByDateQuery } from "@/gql/graphql";
+import { SummaryBoardDocument, RealtimePaginationQuery } from "@/gql/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { SetStateAction, useEffect, useRef, useState } from "react";
@@ -14,8 +14,8 @@ import useInfiniteScrollablePostList from "../hooks/useInfiniteScrollablePostLis
 
 export const ContentWrapper = () => {
   const pageTheme = useTheme();
-  const [postData, setPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
-  const [fiteredPostData, setFiteredPostData] = useState<BoardContentsByDateQuery['boardContentsByDate']>();
+  const [postData, setPostData] = useState<RealtimePaginationQuery['realtimePagination']>();
+  const [fiteredPostData, setFiteredPostData] = useState<RealtimePaginationQuery['realtimePagination']>();
   const isMobile = useMediaQuery(pageTheme.breakpoints.down("xs"));
   const [filterCollection, setFilterCollection] = useState<FilterCollectionType>();
   const {loadingRef, loading: boardContentsQueryLoading, error: boardContentsQueryError, data: boardContentsData} 
@@ -36,7 +36,7 @@ export const ContentWrapper = () => {
 
   useEffect(()=>{
     // Site이름을 영어 -> 한글
-    const modifiedData = (boardContentsData?.boardContentsByDate)?.map((value) => {
+    const modifiedData = (boardContentsData?.realtimePagination)?.map((value) => {
       if (value?.site === "ygosu") {
         return { ...value, site: "와이고수" };
       } else if (value?.site === "dcinside") {
@@ -61,7 +61,7 @@ export const ContentWrapper = () => {
     }
   },[boardContentsData])
 
-  if(isMobile) return boardContentsData?.boardContentsByDate && <PostList onClickCard={handleSummaryBoard} postItems={postData} />
+  if(isMobile) return boardContentsData?.realtimePagination && <PostList onClickCard={handleSummaryBoard} postItems={postData ?? []} />
   
   return(
     <>
@@ -70,11 +70,11 @@ export const ContentWrapper = () => {
       <Grid xs={0} md={3} paddingY="0" > 
         {/* 왼쪽 Side */}
         <Box width="100%" bgcolor="white" position="sticky" top="73px" >
-          <Filter setFilteredPostData={setFiteredPostData} postData={postData} filteredData={filterCollection} />
+          {/* <Filter setFilteredPostData={setFiteredPostData} postData={postData} filteredData={filterCollection} /> */}
         </Box>
       </Grid>
       <Grid xs={12} md={6}>
-        <PostList onClickCard={handleSummaryBoard} postItems={fiteredPostData} />
+        <PostList onClickCard={handleSummaryBoard} postItems={fiteredPostData ?? []} />
         {boardContentsQueryLoading && <Loading />}
         {boardContentsQueryError && <Error message={boardContentsQueryError.message} isMobile={isMobile} />}
         <div ref={loadingRef}/>

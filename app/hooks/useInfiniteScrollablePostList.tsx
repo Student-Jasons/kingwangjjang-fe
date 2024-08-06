@@ -1,11 +1,11 @@
 import { ApolloError, useQuery } from "@apollo/client";
 import { useEffect, useRef, useState } from "react";
-import { BoardContentsByDateDocument } from "../__generated__/graphql";
+import { RealtimePaginationDocument } from "../__generated__/graphql";
 
 const useInfiniteScrollablePostList = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const loadingRef = useRef(null);
-  const { loading, error, data, fetchMore} = useQuery (BoardContentsByDateDocument, {variables: { index: "0" },});
+  const { loading, error, data, fetchMore} = useQuery (RealtimePaginationDocument, {variables: { index: 0 },});
 
   useEffect(() => {
     console.log('pageIndex', pageIndex)
@@ -15,11 +15,12 @@ const useInfiniteScrollablePostList = () => {
           index: (pageIndex).toString()
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult) return previousResult; 
+          if (!fetchMoreResult) return previousResult;
           return {
-            boardContentsByDate: [
-              ...(previousResult.boardContentsByDate || []),
-              ...(fetchMoreResult.boardContentsByDate || [])
+            ...previousResult,
+            realtimePagination: [
+              ...(previousResult.realtimePagination || []),
+              ...(fetchMoreResult.realtimePagination || [])
             ]
           };
         },
