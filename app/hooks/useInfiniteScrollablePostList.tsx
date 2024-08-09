@@ -12,7 +12,7 @@ const useInfiniteScrollablePostList = () => {
     if (pageIndex > 0) {
       fetchMore({
         variables: {
-          index: (pageIndex).toString()
+          index: pageIndex
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
           if (!fetchMoreResult) return previousResult;
