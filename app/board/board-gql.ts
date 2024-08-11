@@ -1,22 +1,40 @@
-import { gql } from "@/gql/gql";
+import { gql } from "@apollo/client";
 
-const REALTIME = gql(`
-query BoardContentsByDate($index: String!) {
-  boardContentsByDate(index: $index) {
-    boardId
-    site
-    rank
-    title
-    url
-    createTime
-    GPTAnswer
-}
-}`);
+// const DAILY_PAGINATION_QUERY = gql`
+//   query DailyPagination($index: Int) {
+//     dailyPagination(index: $index) {
+//       GPTAnswer
+//       boardId
+//       createTime
+//       rank
+//       site
+//       title
+//       url
+//     }
+//   }
+// `;
 
-const SUMMARY_BOARD = gql(`
+const SUMMARY_BOARD_MUTATION = gql`
   mutation SummaryBoard($boardId: String!, $site: String!) {
-      summaryBoard(boardId: $boardId, site: $site) {
-          boardSummary
-      }
+    summaryBoard(boardId: $boardId, site: $site) {
+      GPTAnswer
+      Tag
+      boardId
+      site
+    }
   }
-`);
+`;
+
+const REALTIME_PAGINATION_QUERY = gql`
+  query RealtimePagination($index: Int) {
+    realtimePagination(index: $index) {
+      boardId
+      rank
+      site
+      title
+      url
+      createTime
+      GPTAnswer
+    }
+  }
+`;

@@ -14,39 +14,24 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  /**
-   * The `DateTime` scalar type represents a DateTime
-   * value as specified by
-   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
-   */
+  /** Date with time (isoformat) */
   DateTime: { input: any; output: any; }
 };
 
-export type BoardSummaryType = {
-  __typename?: 'BoardSummaryType';
+export type Daily = {
+  __typename?: 'Daily';
   GPTAnswer?: Maybe<Scalars['String']['output']>;
-  boardId?: Maybe<Scalars['String']['output']>;
-  createTime?: Maybe<Scalars['DateTime']['output']>;
+  boardId: Scalars['String']['output'];
+  createTime: Scalars['DateTime']['output'];
   rank?: Maybe<Scalars['String']['output']>;
-  site?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
-};
-
-export type DailyType = {
-  __typename?: 'DailyType';
-  GPTAnswer?: Maybe<Scalars['String']['output']>;
-  boardId?: Maybe<Scalars['String']['output']>;
-  createTime?: Maybe<Scalars['DateTime']['output']>;
-  rank?: Maybe<Scalars['String']['output']>;
-  site?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  site: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  summaryBoard?: Maybe<SummaryBoardMutation>;
+  summaryBoard: Summary;
 };
 
 
@@ -57,37 +42,38 @@ export type MutationSummaryBoardArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  allDaily?: Maybe<Array<Maybe<DailyType>>>;
-  allRealtime?: Maybe<Array<Maybe<RealTimeType>>>;
-  boardContentsByDate?: Maybe<Array<Maybe<BoardSummaryType>>>;
+  dailyPagination: Array<Daily>;
+  realtimePagination: Array<RealTime>;
 };
 
 
-export type QueryBoardContentsByDateArgs = {
-  index: Scalars['String']['input'];
+export type QueryDailyPaginationArgs = {
+  index?: Scalars['Int']['input'];
 };
 
-export type RealTimeType = {
-  __typename?: 'RealTimeType';
+
+export type QueryRealtimePaginationArgs = {
+  index?: Scalars['Int']['input'];
+};
+
+export type RealTime = {
+  __typename?: 'RealTime';
   GPTAnswer?: Maybe<Scalars['String']['output']>;
-  boardId?: Maybe<Scalars['String']['output']>;
-  createTime?: Maybe<Scalars['DateTime']['output']>;
-  site?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  boardId: Scalars['String']['output'];
+  createTime: Scalars['DateTime']['output'];
+  rank?: Maybe<Scalars['String']['output']>;
+  site: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
-export type SummaryBoardMutation = {
-  __typename?: 'SummaryBoardMutation';
-  boardSummary?: Maybe<Scalars['String']['output']>;
+export type Summary = {
+  __typename?: 'Summary';
+  GPTAnswer: Scalars['String']['output'];
+  Tag: Array<Scalars['String']['output']>;
+  boardId: Scalars['String']['output'];
+  site: Scalars['String']['output'];
 };
-
-export type BoardContentsByDateQueryVariables = Exact<{
-  index: Scalars['String']['input'];
-}>;
-
-
-export type BoardContentsByDateQuery = { __typename?: 'Query', boardContentsByDate?: Array<{ __typename?: 'BoardSummaryType', boardId?: string | null, site?: string | null, rank?: string | null, title?: string | null, url?: string | null, createTime?: any | null, GPTAnswer?: string | null } | null> | null };
 
 export type SummaryBoardMutationVariables = Exact<{
   boardId: Scalars['String']['input'];
@@ -95,8 +81,15 @@ export type SummaryBoardMutationVariables = Exact<{
 }>;
 
 
-export type SummaryBoardMutation = { __typename?: 'Mutation', summaryBoard?: { __typename?: 'SummaryBoardMutation', boardSummary?: string | null } | null };
+export type SummaryBoardMutation = { __typename?: 'Mutation', summaryBoard: { __typename?: 'Summary', GPTAnswer: string, Tag: Array<string>, boardId: string, site: string } };
+
+export type RealtimePaginationQueryVariables = Exact<{
+  index?: InputMaybe<Scalars['Int']['input']>;
+}>;
 
 
-export const BoardContentsByDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BoardContentsByDate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"index"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardContentsByDate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"index"},"value":{"kind":"Variable","name":{"kind":"Name","value":"index"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"rank"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"createTime"}},{"kind":"Field","name":{"kind":"Name","value":"GPTAnswer"}}]}}]}}]} as unknown as DocumentNode<BoardContentsByDateQuery, BoardContentsByDateQueryVariables>;
-export const SummaryBoardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SummaryBoard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"boardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"summaryBoard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"boardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"boardId"}}},{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardSummary"}}]}}]}}]} as unknown as DocumentNode<SummaryBoardMutation, SummaryBoardMutationVariables>;
+export type RealtimePaginationQuery = { __typename?: 'Query', realtimePagination: Array<{ __typename?: 'RealTime', boardId: string, rank?: string | null, site: string, title: string, url: string, createTime: any, GPTAnswer?: string | null }> };
+
+
+export const SummaryBoardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SummaryBoard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"boardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"summaryBoard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"boardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"boardId"}}},{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GPTAnswer"}},{"kind":"Field","name":{"kind":"Name","value":"Tag"}},{"kind":"Field","name":{"kind":"Name","value":"boardId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}}]}}]}}]} as unknown as DocumentNode<SummaryBoardMutation, SummaryBoardMutationVariables>;
+export const RealtimePaginationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"RealtimePagination"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"index"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"realtimePagination"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"index"},"value":{"kind":"Variable","name":{"kind":"Name","value":"index"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"boardId"}},{"kind":"Field","name":{"kind":"Name","value":"rank"}},{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"createTime"}},{"kind":"Field","name":{"kind":"Name","value":"GPTAnswer"}}]}}]}}]} as unknown as DocumentNode<RealtimePaginationQuery, RealtimePaginationQueryVariables>;

@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { API_URL } from "../constants";
 
 const httpLink = createHttpLink({
-  uri: `${API_URL}/graphql/`,
+  uri: `${API_URL}/graphql`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

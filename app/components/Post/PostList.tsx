@@ -1,8 +1,8 @@
 import { PostCard } from "./PostCard";
-import { BoardContentsByDateQuery } from "@/app/__generated__/graphql";
+import {RealtimePaginationQuery } from "@/gql/graphql";
 
 interface Props {
-  postItems: BoardContentsByDateQuery['boardContentsByDate'];
+  postItems: RealtimePaginationQuery['realtimePagination'];
   onClickCard: (boardId: string, stie: string) => void;
 }
 
